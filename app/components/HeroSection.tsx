@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import Image from 'next/image'
 import { Circle, ArrowRight, Play, Star } from 'lucide-react'
 
 export default function HeroSection() {
@@ -73,11 +74,16 @@ export default function HeroSection() {
             <span className="text-sm font-medium text-neon-blue">Web3 Basketball Museum</span>
           </motion.div>
           
-          <h1 className="text-6xl md:text-8xl font-orbitron font-black mb-6">
-            <span className="gradient-text">History</span>
-            <br />
-            <span className="text-white">of the Game</span>
-          </h1>
+          <div className="mb-6">
+            <Image
+              src="/logos/HOTG_Logo_transparent.png"
+              alt="History of the Game Logo"
+              width={400}
+              height={200}
+              className="mx-auto drop-shadow-2xl"
+              priority
+            />
+          </div>
           
           <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed">
             Step into the future of basketball storytelling. Experience legendary moments, 
