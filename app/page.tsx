@@ -15,7 +15,7 @@ export default function Home() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowLogo(false)
-    }, 2500) // Show logo for 2.5 seconds
+    }, 3500) // Show logo for 3.5 seconds
 
     return () => clearTimeout(timer)
   }, [])
@@ -28,13 +28,18 @@ export default function Home() {
         )}
       </AnimatePresence>
       
-      <main className="min-h-screen">
+      <motion.main 
+        className="min-h-screen"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+      >
         <HeroSection />
         <MuseumShowcase />
         <Web3Features />
         <CallToAction />
         <Footer />
-      </main>
+      </motion.main>
     </>
   )
 }

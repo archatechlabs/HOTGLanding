@@ -14,7 +14,10 @@ export default function LogoAnimation({ onComplete }: LogoAnimationProps) {
       initial={{ opacity: 1 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.8, ease: "easeInOut" }}
+      transition={{ 
+        duration: 1.2, 
+        ease: [0.25, 0.46, 0.45, 0.94] // Custom cubic-bezier for smooth fade
+      }}
       onAnimationComplete={onComplete}
     >
       {/* Simplified Background */}
@@ -33,11 +36,12 @@ export default function LogoAnimation({ onComplete }: LogoAnimationProps) {
         className="relative z-10"
         initial={{ scale: 0, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.95, opacity: 0 }}
         transition={{
           type: "spring",
-          stiffness: 80,
-          damping: 20,
-          duration: 1.2
+          stiffness: 60,
+          damping: 25,
+          duration: 1.5
         }}
       >
         {/* Logo Image */}
@@ -71,7 +75,13 @@ export default function LogoAnimation({ onComplete }: LogoAnimationProps) {
         className="absolute bottom-32 text-center"
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.8, duration: 0.6, ease: "easeOut" }}
+        exit={{ opacity: 0, y: -10 }}
+        transition={{ 
+          delay: 0.8, 
+          duration: 0.8, 
+          ease: "easeOut",
+          exit: { duration: 0.6, ease: "easeIn" }
+        }}
       >
         <h2 className="text-2xl font-orbitron font-bold gradient-text mb-2">
           History of the Game
