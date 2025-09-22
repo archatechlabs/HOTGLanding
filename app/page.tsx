@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { AnimatePresence } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import HeroSection from './components/HeroSection'
 import MuseumShowcase from './components/MuseumShowcase'
 import Web3Features from './components/Web3Features'
