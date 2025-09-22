@@ -13,6 +13,9 @@ export default function Home() {
   const [showLogo, setShowLogo] = useState(true)
 
   useEffect(() => {
+    // Reset animation on each page load
+    setShowLogo(true)
+    
     const timer = setTimeout(() => {
       setShowLogo(false)
     }, 3500) // Show logo for 3.5 seconds
@@ -22,9 +25,12 @@ export default function Home() {
 
   return (
     <>
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         {showLogo && (
-          <LogoAnimation onComplete={() => setShowLogo(false)} />
+          <LogoAnimation 
+            key="logo-animation"
+            onComplete={() => setShowLogo(false)} 
+          />
         )}
       </AnimatePresence>
       
