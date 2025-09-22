@@ -2,10 +2,10 @@
 
 import { motion } from 'framer-motion'
 import { 
-  Basketball, 
+  Circle, 
   Twitter, 
   Github, 
-  Discord, 
+  MessageCircle, 
   Mail,
   ArrowUp
 } from 'lucide-react'
@@ -32,7 +32,7 @@ export default function Footer() {
           >
             <div className="flex items-center gap-3 mb-6">
               <div className="w-12 h-12 bg-gradient-to-br from-neon-blue to-neon-purple rounded-xl flex items-center justify-center">
-                <Basketball className="text-white" size={24} />
+                <Circle className="text-white" size={24} />
               </div>
               <div>
                 <h3 className="text-2xl font-orbitron font-bold gradient-text">
@@ -48,7 +48,7 @@ export default function Footer() {
             <div className="flex gap-4">
               {[
                 { icon: Twitter, href: "#", label: "Twitter" },
-                { icon: Discord, href: "#", label: "Discord" },
+                { icon: MessageCircle, href: "#", label: "Discord" },
                 { icon: Github, href: "#", label: "GitHub" },
                 { icon: Mail, href: "#", label: "Email" }
               ].map((social, index) => (

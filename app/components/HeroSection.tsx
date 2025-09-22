@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Basketball, ArrowRight, Play, Star } from 'lucide-react'
+import { Circle, ArrowRight, Play, Star } from 'lucide-react'
 
 export default function HeroSection() {
   return (
@@ -22,7 +22,7 @@ export default function HeroSection() {
           ease: "easeInOut"
         }}
       >
-        <Basketball size={60} />
+        <Circle size={60} />
       </motion.div>
       
       <motion.div
@@ -38,7 +38,7 @@ export default function HeroSection() {
           delay: 2
         }}
       >
-        <Basketball size={40} />
+        <Circle size={40} />
       </motion.div>
 
       <motion.div
@@ -54,7 +54,7 @@ export default function HeroSection() {
           delay: 1
         }}
       >
-        <Basketball size={50} />
+        <Circle size={50} />
       </motion.div>
 
       {/* Main Content */}
