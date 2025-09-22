@@ -15,7 +15,7 @@ export default function Home() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowLogo(false)
-    }, 3000) // Show logo for 3 seconds
+    }, 2500) // Show logo for 2.5 seconds
 
     return () => clearTimeout(timer)
   }, [])
