@@ -3,46 +3,64 @@
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { Circle, ArrowRight, Play, Star } from 'lucide-react'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 // Animated Counter Component
 function AnimatedCounter({ target, duration, delay }: { target: number; duration: number; delay: number }) {
   const [count, setCount] = useState(0)
-  const [isVisible, setIsVisible] = useState(false)
+  const [hasAnimated, setHasAnimated] = useState(false)
+  const counterRef = useRef<HTMLSpanElement>(null)
 
   useEffect(() => {
-    // Start animation immediately when component mounts
-    const startTime = Date.now()
-    const startValue = 0
-    const endValue = target
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !hasAnimated) {
+            setHasAnimated(true)
+            
+            // Start animation after a small delay
+            setTimeout(() => {
+              const startTime = Date.now()
+              const startValue = 0
+              const endValue = target
 
-    const animate = () => {
-      const elapsed = Date.now() - startTime
-      const progress = Math.min(elapsed / (duration * 1000), 1)
-      
-      // Easing function for smooth animation
-      const easeOutQuart = 1 - Math.pow(1 - progress, 4)
-      const currentValue = Math.floor(startValue + (endValue - startValue) * easeOutQuart)
-      
-      setCount(currentValue)
+              const animate = () => {
+                const elapsed = Date.now() - startTime
+                const progress = Math.min(elapsed / (duration * 1000), 1)
+                
+                // Easing function for smooth animation
+                const easeOutQuart = 1 - Math.pow(1 - progress, 4)
+                const currentValue = Math.floor(startValue + (endValue - startValue) * easeOutQuart)
+                
+                setCount(currentValue)
 
-      if (progress < 1) {
-        requestAnimationFrame(animate)
-      } else {
-        setCount(target)
-      }
+                if (progress < 1) {
+                  requestAnimationFrame(animate)
+                } else {
+                  setCount(target)
+                }
+              }
+
+              animate()
+            }, delay * 1000)
+          }
+        })
+      },
+      { threshold: 0.5 }
+    )
+
+    if (counterRef.current) {
+      observer.observe(counterRef.current)
     }
 
-    // Start animation after delay
-    const timer = setTimeout(() => {
-      setIsVisible(true)
-      animate()
-    }, delay * 1000)
+    return () => {
+      if (counterRef.current) {
+        observer.unobserve(counterRef.current)
+      }
+    }
+  }, [target, duration, delay, hasAnimated])
 
-    return () => clearTimeout(timer)
-  }, [target, duration, delay])
-
-  return <span>{isVisible ? count.toLocaleString() : '0'}</span>
+  return <span ref={counterRef}>{count.toLocaleString()}</span>
 }
 
 export default function HeroSection() {
@@ -182,8 +200,8 @@ export default function HeroSection() {
                 {typeof stat.number === 'number' ? (
                   <AnimatedCounter 
                     target={stat.number} 
-                    duration={1.5} 
-                    delay={0.5 + index * 0.3}
+                    duration={2} 
+                    delay={index * 0.2}
                   />
                 ) : (
                   stat.number
