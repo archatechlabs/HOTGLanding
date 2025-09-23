@@ -8,37 +8,41 @@ import { useState, useEffect } from 'react'
 // Animated Counter Component
 function AnimatedCounter({ target, duration, delay }: { target: number; duration: number; delay: number }) {
   const [count, setCount] = useState(0)
+  const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      const startTime = Date.now()
-      const startValue = 0
-      const endValue = target
+    // Start animation immediately when component mounts
+    const startTime = Date.now()
+    const startValue = 0
+    const endValue = target
 
-      const animate = () => {
-        const elapsed = Date.now() - startTime
-        const progress = Math.min(elapsed / (duration * 1000), 1)
-        
-        // Easing function for smooth animation
-        const easeOutQuart = 1 - Math.pow(1 - progress, 4)
-        const currentValue = Math.floor(startValue + (endValue - startValue) * easeOutQuart)
-        
-        setCount(currentValue)
+    const animate = () => {
+      const elapsed = Date.now() - startTime
+      const progress = Math.min(elapsed / (duration * 1000), 1)
+      
+      // Easing function for smooth animation
+      const easeOutQuart = 1 - Math.pow(1 - progress, 4)
+      const currentValue = Math.floor(startValue + (endValue - startValue) * easeOutQuart)
+      
+      setCount(currentValue)
 
-        if (progress < 1) {
-          requestAnimationFrame(animate)
-        } else {
-          setCount(target)
-        }
+      if (progress < 1) {
+        requestAnimationFrame(animate)
+      } else {
+        setCount(target)
       }
+    }
 
+    // Start animation after delay
+    const timer = setTimeout(() => {
+      setIsVisible(true)
       animate()
     }, delay * 1000)
 
     return () => clearTimeout(timer)
   }, [target, duration, delay])
 
-  return <span>{count.toLocaleString()}</span>
+  return <span>{isVisible ? count.toLocaleString() : '0'}</span>
 }
 
 export default function HeroSection() {
@@ -178,8 +182,8 @@ export default function HeroSection() {
                 {typeof stat.number === 'number' ? (
                   <AnimatedCounter 
                     target={stat.number} 
-                    duration={2} 
-                    delay={1 + index * 0.2}
+                    duration={1.5} 
+                    delay={0.5 + index * 0.3}
                   />
                 ) : (
                   stat.number
