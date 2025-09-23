@@ -10,10 +10,10 @@ interface LogoAnimationProps {
 
 export default function LogoAnimation({ onComplete }: LogoAnimationProps) {
   useEffect(() => {
-    // Auto-complete after 3 seconds
+    // Auto-complete after 4 seconds to ensure at least 3 seconds of animation
     const timer = setTimeout(() => {
       onComplete?.()
-    }, 3000)
+    }, 4000)
 
     return () => clearTimeout(timer)
   }, [onComplete])
@@ -32,10 +32,20 @@ export default function LogoAnimation({ onComplete }: LogoAnimationProps) {
       <motion.div
         className="relative z-10"
         initial={{ scale: 0.5, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
+        animate={{ 
+          scale: 1, 
+          opacity: 1,
+          y: [0, -10, 0]
+        }}
         transition={{
-          duration: 0.8,
-          ease: "easeOut"
+          scale: { duration: 0.8, ease: "easeOut" },
+          opacity: { duration: 0.8, ease: "easeOut" },
+          y: { 
+            duration: 2, 
+            repeat: Infinity, 
+            ease: "easeInOut",
+            delay: 1
+          }
         }}
       >
         <Image
