@@ -10,38 +10,48 @@ function SimpleCounter({ target }: { target: number }) {
 
 export default function MobileHeroSection() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Simple Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-dark-bg to-gray-900" />
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden animated-bg">
+      {/* Animated Background Elements - CSS only */}
+      <div className="absolute top-20 left-10 text-basketball-orange opacity-20 mobile-float mobile-delay-1">
+        <div className="w-12 h-12 rounded-full bg-basketball-orange/20"></div>
+      </div>
+      
+      <div className="absolute top-40 right-20 text-neon-blue opacity-30 mobile-float mobile-delay-2">
+        <div className="w-8 h-8 rounded-full bg-neon-blue/20"></div>
+      </div>
+
+      <div className="absolute bottom-32 left-1/4 text-neon-purple opacity-25 mobile-float mobile-delay-3">
+        <div className="w-10 h-10 rounded-full bg-neon-purple/20"></div>
+      </div>
       
       {/* Main Content */}
       <div className="relative z-10 text-center px-4 max-w-6xl mx-auto">
         <div className="mb-8">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-neon-blue/30 mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-neon-blue/30 mb-6 mobile-fade-in mobile-delay-1">
             <Star className="text-neon-blue" size={16} />
             <span className="text-sm font-medium text-neon-blue">Web3 Basketball Museum</span>
           </div>
           
-          <div className="mb-6">
+          <div className="mb-6 mobile-scale-in mobile-delay-2">
             <Image
               src="/logos/HOTG_Logo_transparent.png"
               alt="History of the Game Logo"
               width={300}
               height={150}
-              className="mx-auto drop-shadow-2xl"
+              className="mx-auto drop-shadow-2xl mobile-float"
               priority
             />
           </div>
           
-          <p className="text-lg text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-lg text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed mobile-fade-in mobile-delay-3">
             Step into the future of basketball storytelling. Experience legendary moments, 
             iconic players, and historic games through immersive Web3 technology.
           </p>
         </div>
 
         {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
-          <button className="group relative px-8 py-4 bg-gradient-to-r from-neon-blue to-neon-purple rounded-full font-semibold text-lg text-white overflow-hidden">
+        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16 mobile-fade-in mobile-delay-4">
+          <button className="group relative px-8 py-4 bg-gradient-to-r from-neon-blue to-neon-purple rounded-full font-semibold text-lg text-white overflow-hidden mobile-glow">
             <span className="relative z-10 flex items-center gap-2">
               Enter Museum
               <ArrowRight className="group-hover:translate-x-1 transition-transform" size={20} />
@@ -54,14 +64,14 @@ export default function MobileHeroSection() {
           </button>
         </div>
 
-        {/* Stats - Static for mobile */}
+        {/* Stats - Animated for mobile */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
           {[
             { number: 5000, label: "Legendary Players", suffix: "+" },
             { number: 10000, label: "Historic Moments", suffix: "+" },
             { number: "∞", label: "Stories to Discover", suffix: "" }
           ].map((stat, index) => (
-            <div key={index} className="text-center">
+            <div key={index} className={`text-center mobile-scale-in mobile-delay-${index + 1}`}>
               <div className="text-4xl md:text-5xl font-orbitron font-bold gradient-text mb-2">
                 {typeof stat.number === 'number' ? (
                   <SimpleCounter target={stat.number} />

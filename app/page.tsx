@@ -10,6 +10,7 @@ import Web3Features from './components/Web3Features'
 import CallToAction from './components/CallToAction'
 import Footer from './components/Footer'
 import LogoAnimation from './components/LogoAnimation'
+import MobileLogoAnimation from './components/MobileLogoAnimation'
 
 export default function Home() {
   const [showLogo, setShowLogo] = useState(true)
@@ -19,10 +20,6 @@ export default function Home() {
     const checkMobile = () => {
       const mobile = window.innerWidth < 768
       setIsMobile(mobile)
-      // Disable logo animation on mobile
-      if (mobile) {
-        setShowLogo(false)
-      }
     }
     
     checkMobile()
@@ -31,20 +28,32 @@ export default function Home() {
     return () => window.removeEventListener('resize', checkMobile)
   }, [])
 
+  // Auto-hide logo animation after 3 seconds
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowLogo(false)
+    }, 3000)
+
+    return () => clearTimeout(timer)
+  }, [])
+
   const handleLogoComplete = () => {
     setShowLogo(false)
   }
 
-  // Completely static mobile version - no animations at all
+  // Mobile version with CSS-only animations
   if (isMobile) {
     return (
-      <main className="min-h-screen">
-        <MobileHeroSection />
-        <StaticMuseumShowcase />
-        <Web3Features />
-        <CallToAction />
-        <Footer />
-      </main>
+      <>
+        {showLogo && <MobileLogoAnimation />}
+        <main className="min-h-screen">
+          <MobileHeroSection />
+          <StaticMuseumShowcase />
+          <Web3Features />
+          <CallToAction />
+          <Footer />
+        </main>
+      </>
     )
   }
 

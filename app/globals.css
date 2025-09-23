@@ -79,16 +79,17 @@ body {
     linear-gradient(90deg, transparent 0%, rgba(0, 212, 255, 0.05) 50%, transparent 100%);
 }
 
-/* Animated background - disabled for mobile performance */
+/* Animated background - CSS-only for mobile, JS for desktop */
 .animated-bg {
   background: linear-gradient(-45deg, #0A0A0A, #1a1a1a, #2d2d2d, #0A0A0A);
   background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
 }
 
-/* Only enable animation on desktop */
-@media (min-width: 768px) {
+/* Mobile-safe animations */
+@media (max-width: 767px) {
   .animated-bg {
-    animation: gradientShift 15s ease infinite;
+    animation-duration: 30s; /* Slower on mobile */
   }
 }
 
@@ -97,3 +98,59 @@ body {
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
+
+/* Mobile-safe animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(0, 212, 255, 0.3); }
+  50% { box-shadow: 0 0 40px rgba(0, 212, 255, 0.6); }
+}
+
+/* Mobile animation classes */
+.mobile-fade-in {
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.mobile-scale-in {
+  animation: scaleIn 0.6s ease-out;
+}
+
+.mobile-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.mobile-glow {
+  animation: glow 2s ease-in-out infinite;
+}
+
+/* Staggered animations for mobile */
+.mobile-delay-1 { animation-delay: 0.1s; }
+.mobile-delay-2 { animation-delay: 0.2s; }
+.mobile-delay-3 { animation-delay: 0.3s; }
+.mobile-delay-4 { animation-delay: 0.4s; }
