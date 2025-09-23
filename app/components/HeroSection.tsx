@@ -3,6 +3,43 @@
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { Circle, ArrowRight, Play, Star } from 'lucide-react'
+import { useState, useEffect } from 'react'
+
+// Animated Counter Component
+function AnimatedCounter({ target, duration, delay }: { target: number; duration: number; delay: number }) {
+  const [count, setCount] = useState(0)
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const startTime = Date.now()
+      const startValue = 0
+      const endValue = target
+
+      const animate = () => {
+        const elapsed = Date.now() - startTime
+        const progress = Math.min(elapsed / (duration * 1000), 1)
+        
+        // Easing function for smooth animation
+        const easeOutQuart = 1 - Math.pow(1 - progress, 4)
+        const currentValue = Math.floor(startValue + (endValue - startValue) * easeOutQuart)
+        
+        setCount(currentValue)
+
+        if (progress < 1) {
+          requestAnimationFrame(animate)
+        } else {
+          setCount(target)
+        }
+      }
+
+      animate()
+    }, delay * 1000)
+
+    return () => clearTimeout(timer)
+  }, [target, duration, delay])
+
+  return <span>{count.toLocaleString()}</span>
+}
 
 export default function HeroSection() {
   return (
@@ -128,9 +165,9 @@ export default function HeroSection() {
           className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto"
         >
           {[
-            { number: "50+", label: "Legendary Players" },
-            { number: "100+", label: "Historic Moments" },
-            { number: "∞", label: "Stories to Discover" }
+            { number: 5000, label: "Legendary Players", suffix: "+" },
+            { number: 10000, label: "Historic Moments", suffix: "+" },
+            { number: "∞", label: "Stories to Discover", suffix: "" }
           ].map((stat, index) => (
             <motion.div
               key={index}
@@ -138,7 +175,16 @@ export default function HeroSection() {
               whileHover={{ scale: 1.05 }}
             >
               <div className="text-4xl md:text-5xl font-orbitron font-bold gradient-text mb-2">
-                {stat.number}
+                {typeof stat.number === 'number' ? (
+                  <AnimatedCounter 
+                    target={stat.number} 
+                    duration={2} 
+                    delay={1 + index * 0.2}
+                  />
+                ) : (
+                  stat.number
+                )}
+                {stat.suffix}
               </div>
               <div className="text-gray-400 text-sm uppercase tracking-wider">
                 {stat.label}
