@@ -5,20 +5,41 @@ import Image from 'next/image'
 import { Circle, ArrowRight, Play, Star } from 'lucide-react'
 import { useState, useEffect, useRef } from 'react'
 
-// Animated Counter Component
+// Animated Counter Component - Mobile Optimized
 function AnimatedCounter({ target, duration, delay }: { target: number; duration: number; delay: number }) {
   const [count, setCount] = useState(0)
   const [hasAnimated, setHasAnimated] = useState(false)
   const counterRef = useRef<HTMLSpanElement>(null)
+  const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
+    // Detect mobile device
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+    
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
+  useEffect(() => {
+    if (hasAnimated) return
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting && !hasAnimated) {
             setHasAnimated(true)
             
-            // Start animation after a small delay
+            // On mobile, show final number immediately to avoid performance issues
+            if (isMobile) {
+              setCount(target)
+              return
+            }
+            
+            // Desktop animation
             setTimeout(() => {
               const startTime = Date.now()
               const startValue = 0
@@ -28,10 +49,7 @@ function AnimatedCounter({ target, duration, delay }: { target: number; duration
                 const elapsed = Date.now() - startTime
                 const progress = Math.min(elapsed / (duration * 1000), 1)
                 
-                // Easing function for smooth animation
-                const easeOutQuart = 1 - Math.pow(1 - progress, 4)
-                const currentValue = Math.floor(startValue + (endValue - startValue) * easeOutQuart)
-                
+                const currentValue = Math.floor(startValue + (endValue - startValue) * progress)
                 setCount(currentValue)
 
                 if (progress < 1) {
@@ -46,7 +64,7 @@ function AnimatedCounter({ target, duration, delay }: { target: number; duration
           }
         })
       },
-      { threshold: 0.5 }
+      { threshold: 0.3 }
     )
 
     if (counterRef.current) {
@@ -58,7 +76,7 @@ function AnimatedCounter({ target, duration, delay }: { target: number; duration
         observer.unobserve(counterRef.current)
       }
     }
-  }, [target, duration, delay, hasAnimated])
+  }, [target, duration, delay, hasAnimated, isMobile])
 
   return <span ref={counterRef}>{count.toLocaleString()}</span>
 }
@@ -69,53 +87,55 @@ export default function HeroSection() {
       {/* Animated Background Elements */}
       <div className="absolute inset-0 court-pattern" />
       
-      {/* Floating Basketball Icons */}
-      <motion.div
-        className="absolute top-20 left-10 text-basketball-orange opacity-20"
-        animate={{ 
-          y: [0, -20, 0],
-          rotate: [0, 360, 0]
-        }}
-        transition={{ 
-          duration: 6,
-          repeat: Infinity,
-          ease: "easeInOut"
-        }}
-      >
-        <Circle size={60} />
-      </motion.div>
-      
-      <motion.div
-        className="absolute top-40 right-20 text-neon-blue opacity-30"
-        animate={{ 
-          y: [0, 30, 0],
-          rotate: [0, -180, 0]
-        }}
-        transition={{ 
-          duration: 8,
-          repeat: Infinity,
-          ease: "easeInOut",
-          delay: 2
-        }}
-      >
-        <Circle size={40} />
-      </motion.div>
+      {/* Floating Basketball Icons - Desktop Only */}
+      <div className="hidden md:block">
+        <motion.div
+          className="absolute top-20 left-10 text-basketball-orange opacity-20"
+          animate={{ 
+            y: [0, -20, 0],
+            rotate: [0, 360, 0]
+          }}
+          transition={{ 
+            duration: 6,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        >
+          <Circle size={60} />
+        </motion.div>
+        
+        <motion.div
+          className="absolute top-40 right-20 text-neon-blue opacity-30"
+          animate={{ 
+            y: [0, 30, 0],
+            rotate: [0, -180, 0]
+          }}
+          transition={{ 
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 2
+          }}
+        >
+          <Circle size={40} />
+        </motion.div>
 
-      <motion.div
-        className="absolute bottom-32 left-1/4 text-neon-purple opacity-25"
-        animate={{ 
-          y: [0, -25, 0],
-          rotate: [0, 180, 0]
-        }}
-        transition={{ 
-          duration: 7,
-          repeat: Infinity,
-          ease: "easeInOut",
-          delay: 1
-        }}
-      >
-        <Circle size={50} />
-      </motion.div>
+        <motion.div
+          className="absolute bottom-32 left-1/4 text-neon-purple opacity-25"
+          animate={{ 
+            y: [0, -25, 0],
+            rotate: [0, 180, 0]
+          }}
+          transition={{ 
+            duration: 7,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 1
+          }}
+        >
+          <Circle size={50} />
+        </motion.div>
+      </div>
 
       {/* Main Content */}
       <div className="relative z-10 text-center px-4 max-w-6xl mx-auto">

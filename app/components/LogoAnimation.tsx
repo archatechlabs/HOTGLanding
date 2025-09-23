@@ -2,21 +2,36 @@
 
 import { motion } from 'framer-motion'
 import Image from 'next/image'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 interface LogoAnimationProps {
   onComplete?: () => void
 }
 
 export default function LogoAnimation({ onComplete }: LogoAnimationProps) {
+  const [isMobile, setIsMobile] = useState(false)
+
   useEffect(() => {
-    // Auto-complete after 4 seconds to ensure at least 3 seconds of animation
+    // Detect mobile device
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+    
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
+  useEffect(() => {
+    // Shorter duration on mobile to prevent crashes
+    const duration = isMobile ? 2000 : 4000
     const timer = setTimeout(() => {
       onComplete?.()
-    }, 4000)
+    }, duration)
 
     return () => clearTimeout(timer)
-  }, [onComplete])
+  }, [onComplete, isMobile])
 
   return (
     <motion.div
