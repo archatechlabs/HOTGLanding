@@ -12,24 +12,17 @@ import LogoAnimation from './components/LogoAnimation'
 export default function Home() {
   const [showLogo, setShowLogo] = useState(true)
 
-  useEffect(() => {
-    // Reset animation on each page load
-    setShowLogo(true)
-    
-    const timer = setTimeout(() => {
-      setShowLogo(false)
-    }, 3500) // Show logo for 3.5 seconds
-
-    return () => clearTimeout(timer)
-  }, [])
+  const handleLogoComplete = () => {
+    setShowLogo(false)
+  }
 
   return (
     <>
-      <AnimatePresence mode="wait">
+      <AnimatePresence>
         {showLogo && (
           <LogoAnimation 
             key="logo-animation"
-            onComplete={() => setShowLogo(false)} 
+            onComplete={handleLogoComplete} 
           />
         )}
       </AnimatePresence>

@@ -79,11 +79,17 @@ body {
     linear-gradient(90deg, transparent 0%, rgba(0, 212, 255, 0.05) 50%, transparent 100%);
 }
 
-/* Animated background */
+/* Animated background - disabled for mobile performance */
 .animated-bg {
   background: linear-gradient(-45deg, #0A0A0A, #1a1a1a, #2d2d2d, #0A0A0A);
   background-size: 400% 400%;
-  animation: gradientShift 15s ease infinite;
+}
+
+/* Only enable animation on desktop */
+@media (min-width: 768px) {
+  .animated-bg {
+    animation: gradientShift 15s ease infinite;
+  }
 }
 
 @keyframes gradientShift {
