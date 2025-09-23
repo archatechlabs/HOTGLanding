@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import HeroSection from './components/HeroSection'
 import MobileHeroSection from './components/MobileHeroSection'
 import MuseumShowcase from './components/MuseumShowcase'
+import StaticMuseumShowcase from './components/StaticMuseumShowcase'
 import Web3Features from './components/Web3Features'
 import CallToAction from './components/CallToAction'
 import Footer from './components/Footer'
@@ -16,7 +17,12 @@ export default function Home() {
 
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768)
+      const mobile = window.innerWidth < 768
+      setIsMobile(mobile)
+      // Disable logo animation on mobile
+      if (mobile) {
+        setShowLogo(false)
+      }
     }
     
     checkMobile()
@@ -29,6 +35,20 @@ export default function Home() {
     setShowLogo(false)
   }
 
+  // Completely static mobile version - no animations at all
+  if (isMobile) {
+    return (
+      <main className="min-h-screen">
+        <MobileHeroSection />
+        <StaticMuseumShowcase />
+        <Web3Features />
+        <CallToAction />
+        <Footer />
+      </main>
+    )
+  }
+
+  // Desktop version with animations
   return (
     <>
       <AnimatePresence>
@@ -40,29 +60,18 @@ export default function Home() {
         )}
       </AnimatePresence>
       
-      <main className="min-h-screen">
-        {isMobile ? (
-          <>
-            <MobileHeroSection />
-            <MuseumShowcase />
-            <Web3Features />
-            <CallToAction />
-            <Footer />
-          </>
-        ) : (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-          >
-            <HeroSection />
-            <MuseumShowcase />
-            <Web3Features />
-            <CallToAction />
-            <Footer />
-          </motion.div>
-        )}
-      </main>
+      <motion.main 
+        className="min-h-screen"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+      >
+        <HeroSection />
+        <MuseumShowcase />
+        <Web3Features />
+        <CallToAction />
+        <Footer />
+      </motion.main>
     </>
   )
 }
