@@ -71,7 +71,7 @@ export default function MobileHeroSection() {
             { number: 10000, label: "Historic Moments", suffix: "+" },
             { number: "∞", label: "Stories to Discover", suffix: "" }
           ].map((stat, index) => (
-            <div key={index} className={`text-center mobile-scale-in mobile-delay-${index + 1}`}>
+            <div key={index} className={`text-center mobile-counter mobile-counter-${index + 1}`}>
               <div className="text-4xl md:text-5xl font-orbitron font-bold gradient-text mb-2">
                 {typeof stat.number === 'number' ? (
                   <SimpleCounter target={stat.number} />
