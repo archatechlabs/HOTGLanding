@@ -154,7 +154,12 @@ export default function HeroSection() {
 
       {/* Main Content */}
       <div className="relative z-10 text-center px-4 max-w-6xl mx-auto">
-        <div className="mb-8">
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.2 }}
+          className="mb-8"
+        >
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-neon-blue/30 mb-6">
             <Star className="text-neon-blue" size={16} />
             <span className="text-sm font-medium text-neon-blue">Web3 Basketball Museum</span>
@@ -175,11 +180,17 @@ export default function HeroSection() {
             Step into the future of basketball storytelling. Experience legendary moments, 
             iconic players, and historic games through immersive Web3 technology.
           </p>
-        </div>
+        </motion.div>
 
         {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.4 }}
+          className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16"
+        >
           <button className="group relative px-8 py-4 bg-gradient-to-r from-neon-blue to-neon-purple rounded-full font-semibold text-lg text-white overflow-hidden">
+            <span className="absolute inset-0 bg-gradient-to-r from-neon-blue to-neon-purple opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-sm"></span>
             <span className="relative z-10 flex items-center gap-2">
               Enter Museum
               <ArrowRight className="group-hover:translate-x-1 transition-transform" size={20} />
@@ -190,10 +201,15 @@ export default function HeroSection() {
             <Play className="group-hover:scale-110 transition-transform" size={20} />
             Watch Trailer
           </button>
-        </div>
+        </motion.div>
 
         {/* Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.8 }}
+          className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto"
+        >
           {[
             { number: 5000, label: "Legendary Players", suffix: "+" },
             { number: 10000, label: "Historic Moments", suffix: "+" },
@@ -217,7 +233,7 @@ export default function HeroSection() {
               </div>
             </div>
           ))}
-        </div>
+        </motion.div>
       </div>
 
       {/* Scroll Indicator - Desktop Only */}

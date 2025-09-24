@@ -2,10 +2,63 @@
 
 import Image from 'next/image'
 import { Star, ArrowRight, Play } from 'lucide-react'
+import { useState, useEffect, useRef } from 'react'
 
-// Simple counter component for mobile
-function SimpleCounter({ target }: { target: number }) {
-  return <span>{target.toLocaleString()}</span>
+// Animated counter component for mobile - CSS + JS hybrid
+function MobileAnimatedCounter({ target }: { target: number }) {
+  const [count, setCount] = useState(0)
+  const [hasAnimated, setHasAnimated] = useState(false)
+  const counterRef = useRef<HTMLSpanElement>(null)
+
+  useEffect(() => {
+    if (hasAnimated) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !hasAnimated) {
+            setHasAnimated(true)
+            
+            // Simple counting animation for mobile
+            const duration = 2000 // 2 seconds
+            const startTime = Date.now()
+            const startValue = 0
+            const endValue = target
+
+            const animate = () => {
+              const elapsed = Date.now() - startTime
+              const progress = Math.min(elapsed / duration, 1)
+              
+              const currentValue = Math.floor(startValue + (endValue - startValue) * progress)
+              setCount(currentValue)
+
+              if (progress < 1) {
+                requestAnimationFrame(animate)
+              } else {
+                setCount(target)
+              }
+            }
+
+            // Start animation after a short delay
+            setTimeout(animate, 500)
+          }
+        })
+      },
+      { threshold: 0.3 }
+    )
+
+    if (counterRef.current) {
+      observer.observe(counterRef.current)
+    }
+
+    return () => {
+      if (counterRef.current) {
+        observer.unobserve(counterRef.current)
+      }
+    }
+  }, [target, hasAnimated])
+
+  return <span ref={counterRef}>{count.toLocaleString()}</span>
 }
 
 export default function MobileHeroSection() {
@@ -74,7 +127,7 @@ export default function MobileHeroSection() {
             <div key={index} className={`text-center mobile-counter mobile-counter-${index + 1}`}>
               <div className="text-4xl md:text-5xl font-orbitron font-bold gradient-text mb-2">
                 {typeof stat.number === 'number' ? (
-                  <SimpleCounter target={stat.number} />
+                  <MobileAnimatedCounter target={stat.number} />
                 ) : (
                   stat.number
                 )}
