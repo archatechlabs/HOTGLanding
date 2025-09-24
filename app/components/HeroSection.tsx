@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Image from 'next/image'
-import { Circle, ArrowRight, Play, Star } from 'lucide-react'
+import { Circle, Play, Star } from 'lucide-react'
 import { useState, useEffect, useRef } from 'react'
 
 // Simple Animated Counter Component
@@ -166,16 +166,8 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.4 }}
-          className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16"
+          className="flex justify-center items-center mb-16"
         >
-          <button className="group relative px-8 py-4 bg-gradient-to-r from-neon-blue to-neon-purple rounded-full font-semibold text-lg text-white overflow-hidden">
-            <span className="absolute inset-0 bg-gradient-to-r from-neon-blue to-neon-purple opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-sm"></span>
-            <span className="relative z-10 flex items-center gap-2">
-              Enter Museum
-              <ArrowRight className="group-hover:translate-x-1 transition-transform" size={20} />
-            </span>
-          </button>
-
           <button className="group flex items-center gap-2 px-8 py-4 glass rounded-full font-semibold text-lg text-white hover:bg-white/20 transition-all">
             <Play className="group-hover:scale-110 transition-transform" size={20} />
             Watch Trailer
