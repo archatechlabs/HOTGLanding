@@ -21,14 +21,14 @@ export default function Footer() {
       <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
       
       <div className="max-w-7xl mx-auto relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
           {/* Brand */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="md:col-span-2"
+            className="md:col-span-1"
           >
             <div className="flex items-center gap-3 mb-6">
               <div className="w-12 h-12 bg-gradient-to-br from-neon-blue to-neon-purple rounded-xl flex items-center justify-center">
@@ -66,7 +66,7 @@ export default function Footer() {
             </div>
           </motion.div>
 
-          {/* Quick Links */}
+          {/* Team */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -74,29 +74,29 @@ export default function Footer() {
             viewport={{ once: true }}
           >
             <h4 className="text-lg font-orbitron font-semibold text-white mb-4">
-              Museum
+              Team
             </h4>
             <ul className="space-y-3">
-              {[
-                "Legends Hall",
-                "Historic Moments",
-                "Team Dynasties",
-                "Evolution Timeline",
-                "Virtual Tours"
-              ].map((link, index) => (
-                <li key={index}>
-                  <a
-                    href="#"
-                    className="text-gray-400 hover:text-white transition-colors"
-                  >
-                    {link}
-                  </a>
-                </li>
-              ))}
+              <li>
+                <a
+                  href="#"
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  Founder: Baron Davis
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  Co-Founder & CTO: Chizz Cunningham
+                </a>
+              </li>
             </ul>
           </motion.div>
 
-          {/* Web3 */}
+          {/* Navigation */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -104,25 +104,33 @@ export default function Footer() {
             viewport={{ once: true }}
           >
             <h4 className="text-lg font-orbitron font-semibold text-white mb-4">
-              Web3
+              Navigation
             </h4>
             <ul className="space-y-3">
-              {[
-                "NFT Collectibles",
-                "Marketplace",
-                "Community",
-                "Governance",
-                "Documentation"
-              ].map((link, index) => (
-                <li key={index}>
-                  <a
-                    href="#"
-                    className="text-gray-400 hover:text-white transition-colors"
-                  >
-                    {link}
-                  </a>
-                </li>
-              ))}
+              <li>
+                <a
+                  href="#"
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  About
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  Roadmap
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  Contact
+                </a>
+              </li>
             </ul>
           </motion.div>
         </div>
