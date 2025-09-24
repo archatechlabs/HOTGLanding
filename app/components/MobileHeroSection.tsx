@@ -2,62 +2,10 @@
 
 import Image from 'next/image'
 import { Star, ArrowRight, Play } from 'lucide-react'
-import { useState, useEffect, useRef } from 'react'
 
-// Simple Animated Counter Component for Mobile
-function MobileAnimatedCounter({ target }: { target: number }) {
-  const [count, setCount] = useState(0)
-  const [isVisible, setIsVisible] = useState(false)
-  const counterRef = useRef<HTMLSpanElement>(null)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && !isVisible) {
-            setIsVisible(true)
-          }
-        })
-      },
-      { threshold: 0.1 }
-    )
-
-    if (counterRef.current) {
-      observer.observe(counterRef.current)
-    }
-
-    return () => {
-      if (counterRef.current) {
-        observer.unobserve(counterRef.current)
-      }
-    }
-  }, [isVisible])
-
-  useEffect(() => {
-    if (!isVisible) return
-
-    const timer = setTimeout(() => {
-      let current = 0
-      const duration = 2 // 2 seconds
-      const increment = target / (duration * 60) // 60fps
-      
-      const animate = () => {
-        current += increment
-        if (current < target) {
-          setCount(Math.floor(current))
-          requestAnimationFrame(animate)
-        } else {
-          setCount(target)
-        }
-      }
-      
-      animate()
-    }, 500) // Start after 0.5s delay
-
-    return () => clearTimeout(timer)
-  }, [isVisible, target])
-
-  return <span ref={counterRef}>{count.toLocaleString()}</span>
+// Static Counter Component for Mobile - No animations
+function StaticCounter({ target }: { target: number }) {
+  return <span>{target.toLocaleString()}</span>
 }
 
 export default function MobileHeroSection() {
@@ -116,7 +64,7 @@ export default function MobileHeroSection() {
           </button>
         </div>
 
-        {/* Stats - Keep the animated counter but remove CSS classes */}
+        {/* Stats - Static counters only */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
           {[
             { number: 5000, label: "Legendary Players", suffix: "+" },
@@ -126,7 +74,7 @@ export default function MobileHeroSection() {
             <div key={index} className="text-center">
               <div className="text-4xl md:text-5xl font-orbitron font-bold gradient-text mb-2">
                 {typeof stat.number === 'number' ? (
-                  <MobileAnimatedCounter target={stat.number} />
+                  <StaticCounter target={stat.number} />
                 ) : (
                   stat.number
                 )}
