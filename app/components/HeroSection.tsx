@@ -5,47 +5,18 @@ import Image from 'next/image'
 import { Circle, ArrowRight, Play, Star } from 'lucide-react'
 import { useState, useEffect, useRef } from 'react'
 
-// Animated Counter Component - Desktop Only
+// Simple Animated Counter Component
 function AnimatedCounter({ target, duration, delay }: { target: number; duration: number; delay: number }) {
   const [count, setCount] = useState(0)
-  const [hasAnimated, setHasAnimated] = useState(false)
+  const [isVisible, setIsVisible] = useState(false)
   const counterRef = useRef<HTMLSpanElement>(null)
 
   useEffect(() => {
-    if (hasAnimated) return
-
-    console.log('Setting up counter observer for target:', target)
-
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          console.log('Counter intersection:', entry.isIntersecting, 'hasAnimated:', hasAnimated)
-          if (entry.isIntersecting && !hasAnimated) {
-            setHasAnimated(true)
-            console.log('Starting counter animation for target:', target)
-            
-            // Start animation after delay
-            setTimeout(() => {
-              const startTime = Date.now()
-              const startValue = 0
-              const endValue = target
-
-              const animate = () => {
-                const elapsed = Date.now() - startTime
-                const progress = Math.min(elapsed / (duration * 1000), 1)
-                
-                const currentValue = Math.floor(startValue + (endValue - startValue) * progress)
-                setCount(currentValue)
-
-                if (progress < 1) {
-                  requestAnimationFrame(animate)
-                } else {
-                  setCount(target)
-                }
-              }
-
-              animate()
-            }, delay * 1000)
+          if (entry.isIntersecting && !isVisible) {
+            setIsVisible(true)
           }
         })
       },
@@ -61,7 +32,30 @@ function AnimatedCounter({ target, duration, delay }: { target: number; duration
         observer.unobserve(counterRef.current)
       }
     }
-  }, [target, duration, delay, hasAnimated])
+  }, [isVisible])
+
+  useEffect(() => {
+    if (!isVisible) return
+
+    const timer = setTimeout(() => {
+      let current = 0
+      const increment = target / (duration * 60) // 60fps
+      
+      const animate = () => {
+        current += increment
+        if (current < target) {
+          setCount(Math.floor(current))
+          requestAnimationFrame(animate)
+        } else {
+          setCount(target)
+        }
+      }
+      
+      animate()
+    }, delay * 1000)
+
+    return () => clearTimeout(timer)
+  }, [isVisible, target, duration, delay])
 
   return <span ref={counterRef}>{count.toLocaleString()}</span>
 }
