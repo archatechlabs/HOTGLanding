@@ -10,22 +10,36 @@ import Web3Features from './components/Web3Features'
 import CallToAction from './components/CallToAction'
 import Footer from './components/Footer'
 import LogoAnimation from './components/LogoAnimation'
-import MobileLogoAnimation from './components/MobileLogoAnimation'
 
 export default function Home() {
   const [showLogo, setShowLogo] = useState(true)
   const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
-    const checkMobile = () => {
-      const mobile = window.innerWidth < 768
-      setIsMobile(mobile)
+    // Safe mobile detection with error handling
+    try {
+      const checkMobile = () => {
+        if (typeof window !== 'undefined') {
+          const mobile = window.innerWidth < 768
+          setIsMobile(mobile)
+        }
+      }
+      
+      checkMobile()
+      if (typeof window !== 'undefined') {
+        window.addEventListener('resize', checkMobile)
+      }
+      
+      return () => {
+        if (typeof window !== 'undefined') {
+          window.removeEventListener('resize', checkMobile)
+        }
+      }
+    } catch (error) {
+      console.error('Mobile detection error:', error)
+      // Default to desktop if there's an error
+      setIsMobile(false)
     }
-    
-    checkMobile()
-    window.addEventListener('resize', checkMobile)
-    
-    return () => window.removeEventListener('resize', checkMobile)
   }, [])
 
   // Auto-hide logo animation after 3 seconds
@@ -41,43 +55,14 @@ export default function Home() {
     setShowLogo(false)
   }
 
-  // Mobile version - NO logo animation to prevent crashes
-  if (isMobile) {
-    return (
-      <main className="min-h-screen">
-        <MobileHeroSection />
-        <StaticMuseumShowcase />
-        <Web3Features />
-        <CallToAction />
-        <Footer />
-      </main>
-    )
-  }
-
-  // Desktop version with animations
+  // Always show mobile version for now to test
   return (
-    <>
-      <AnimatePresence>
-        {showLogo && (
-          <LogoAnimation 
-            key="logo-animation"
-            onComplete={handleLogoComplete} 
-          />
-        )}
-      </AnimatePresence>
-      
-      <motion.main 
-        className="min-h-screen"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-      >
-        <HeroSection />
-        <MuseumShowcase />
-        <Web3Features />
-        <CallToAction />
-        <Footer />
-      </motion.main>
-    </>
+    <main className="min-h-screen">
+      <MobileHeroSection />
+      <StaticMuseumShowcase />
+      <Web3Features />
+      <CallToAction />
+      <Footer />
+    </main>
   )
 }
