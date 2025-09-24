@@ -4,47 +4,22 @@ import Image from 'next/image'
 import { Star, ArrowRight, Play } from 'lucide-react'
 import { useState, useEffect, useRef } from 'react'
 
-// Animated counter component for mobile - CSS + JS hybrid
+// Simple Animated Counter Component for Mobile
 function MobileAnimatedCounter({ target }: { target: number }) {
   const [count, setCount] = useState(0)
-  const [hasAnimated, setHasAnimated] = useState(false)
+  const [isVisible, setIsVisible] = useState(false)
   const counterRef = useRef<HTMLSpanElement>(null)
 
   useEffect(() => {
-    if (hasAnimated) return
-
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting && !hasAnimated) {
-            setHasAnimated(true)
-            
-            // Simple counting animation for mobile
-            const duration = 2000 // 2 seconds
-            const startTime = Date.now()
-            const startValue = 0
-            const endValue = target
-
-            const animate = () => {
-              const elapsed = Date.now() - startTime
-              const progress = Math.min(elapsed / duration, 1)
-              
-              const currentValue = Math.floor(startValue + (endValue - startValue) * progress)
-              setCount(currentValue)
-
-              if (progress < 1) {
-                requestAnimationFrame(animate)
-              } else {
-                setCount(target)
-              }
-            }
-
-            // Start animation after a short delay
-            setTimeout(animate, 500)
+          if (entry.isIntersecting && !isVisible) {
+            setIsVisible(true)
           }
         })
       },
-      { threshold: 0.3 }
+      { threshold: 0.1 }
     )
 
     if (counterRef.current) {
@@ -56,7 +31,31 @@ function MobileAnimatedCounter({ target }: { target: number }) {
         observer.unobserve(counterRef.current)
       }
     }
-  }, [target, hasAnimated])
+  }, [isVisible])
+
+  useEffect(() => {
+    if (!isVisible) return
+
+    const timer = setTimeout(() => {
+      let current = 0
+      const duration = 2 // 2 seconds
+      const increment = target / (duration * 60) // 60fps
+      
+      const animate = () => {
+        current += increment
+        if (current < target) {
+          setCount(Math.floor(current))
+          requestAnimationFrame(animate)
+        } else {
+          setCount(target)
+        }
+      }
+      
+      animate()
+    }, 500) // Start after 0.5s delay
+
+    return () => clearTimeout(timer)
+  }, [isVisible, target])
 
   return <span ref={counterRef}>{count.toLocaleString()}</span>
 }
