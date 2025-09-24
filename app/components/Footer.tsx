@@ -138,13 +138,13 @@ export default function Footer() {
           </div>
           
           <div className="flex items-center gap-6 text-sm text-gray-400">
-            <a href="#" className="hover:text-white transition-colors">
+            <a href="/privacy" className="hover:text-white transition-colors">
               Privacy Policy
             </a>
-            <a href="#" className="hover:text-white transition-colors">
+            <a href="/terms" className="hover:text-white transition-colors">
               Terms of Service
             </a>
-            <a href="#" className="hover:text-white transition-colors">
+            <a href="/cookies" className="hover:text-white transition-colors">
               Cookie Policy
             </a>
           </div>
