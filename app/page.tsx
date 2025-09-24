@@ -41,19 +41,16 @@ export default function Home() {
     setShowLogo(false)
   }
 
-  // Mobile version with CSS-only animations
+  // Mobile version - NO logo animation to prevent crashes
   if (isMobile) {
     return (
-      <>
-        {showLogo && <MobileLogoAnimation />}
-        <main className="min-h-screen">
-          <MobileHeroSection />
-          <StaticMuseumShowcase />
-          <Web3Features />
-          <CallToAction />
-          <Footer />
-        </main>
-      </>
+      <main className="min-h-screen">
+        <MobileHeroSection />
+        <StaticMuseumShowcase />
+        <Web3Features />
+        <CallToAction />
+        <Footer />
+      </main>
     )
   }
 
