@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { ArrowRight, Star, Users, Zap } from 'lucide-react'
+import { Star, Users, Zap } from 'lucide-react'
 
 export default function CallToAction() {
   return (
@@ -47,20 +47,8 @@ export default function CallToAction() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
               viewport={{ once: true }}
-              className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12"
+              className="flex justify-center items-center mb-12"
             >
-              <motion.button
-                className="group relative px-8 py-4 bg-gradient-to-r from-neon-blue to-neon-purple rounded-full font-semibold text-lg text-white overflow-hidden"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <span className="relative z-10 flex items-center gap-2">
-                  Enter Museum Now
-                  <ArrowRight className="group-hover:translate-x-1 transition-transform" size={20} />
-                </span>
-                <div className="absolute inset-0 bg-gradient-to-r from-neon-purple to-basketball-orange opacity-0 group-hover:opacity-100 transition-opacity" />
-              </motion.button>
-
               <motion.button
                 className="group flex items-center gap-2 px-8 py-4 glass rounded-full font-semibold text-lg text-white hover:bg-white/20 transition-all border border-white/30"
                 whileHover={{ scale: 1.05 }}
