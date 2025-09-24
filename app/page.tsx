@@ -55,14 +55,43 @@ export default function Home() {
     setShowLogo(false)
   }
 
-  // Always show mobile version for now to test
+  // Mobile version - stable, no logo animation
+  if (isMobile) {
+    return (
+      <main className="min-h-screen">
+        <MobileHeroSection />
+        <StaticMuseumShowcase />
+        <Web3Features />
+        <CallToAction />
+        <Footer />
+      </main>
+    )
+  }
+
+  // Desktop version with animations
   return (
-    <main className="min-h-screen">
-      <MobileHeroSection />
-      <StaticMuseumShowcase />
-      <Web3Features />
-      <CallToAction />
-      <Footer />
-    </main>
+    <>
+      <AnimatePresence>
+        {showLogo && (
+          <LogoAnimation 
+            key="logo-animation"
+            onComplete={handleLogoComplete} 
+          />
+        )}
+      </AnimatePresence>
+      
+      <motion.main 
+        className="min-h-screen"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+      >
+        <HeroSection />
+        <MuseumShowcase />
+        <Web3Features />
+        <CallToAction />
+        <Footer />
+      </motion.main>
+    </>
   )
 }

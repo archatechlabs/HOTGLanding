@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { Star, ArrowRight, Play } from 'lucide-react'
 
 // Static Counter Component for Mobile - No animations
@@ -32,9 +33,14 @@ export default function MobileHeroSection() {
           </div>
           
           <div className="mb-6">
-            <h1 className="text-4xl md:text-6xl font-orbitron font-bold gradient-text">
-              History of the Game
-            </h1>
+            <Image
+              src="/logos/HOTG_Logo_transparent.png"
+              alt="History of the Game Logo"
+              width={300}
+              height={150}
+              className="mx-auto drop-shadow-2xl"
+              priority
+            />
           </div>
           
           <p className="text-lg text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed">
