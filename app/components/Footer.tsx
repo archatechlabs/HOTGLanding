@@ -76,24 +76,20 @@ export default function Footer() {
             <h4 className="text-lg font-orbitron font-semibold text-white mb-4">
               Team
             </h4>
-            <ul className="space-y-3">
-              <li>
+            <div className="space-y-3">
+              <div>
                 <a
-                  href="#"
-                  className="text-gray-400 hover:text-white transition-colors"
+                  href="/team"
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-neon-blue to-neon-purple rounded-full font-semibold text-white hover:opacity-90 transition-opacity"
                 >
-                  Founder: Baron Davis
+                  Meet Our Team
                 </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-gray-400 hover:text-white transition-colors"
-                >
-                  Co-Founder & CTO: Chizz Cunningham
-                </a>
-              </li>
-            </ul>
+              </div>
+              <div className="text-sm text-gray-400 space-y-1">
+                <div>Founder: Baron Davis</div>
+                <div>Co-Founder & CTO: Chizz Cunningham</div>
+              </div>
+            </div>
           </motion.div>
 
           {/* Navigation */}
