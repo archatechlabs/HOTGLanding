@@ -10,7 +10,18 @@ function StaticCounter({ target }: { target: number }) {
 
 export default function MobileHeroSection() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-dark-bg to-gray-900">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Hero Background Image */}
+      <div className="absolute inset-0">
+        <Image
+          src="/images/herobackground.png"
+          alt="Basketball court background"
+          fill
+          className="object-cover"
+          priority
+        />
+        <div className="absolute inset-0 bg-black/40" />
+      </div>
       {/* Static Background Elements - No animations */}
       <div className="absolute top-20 left-10 opacity-20">
         <div className="w-12 h-12 rounded-full bg-basketball-orange/20"></div>

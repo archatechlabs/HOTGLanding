@@ -76,6 +76,18 @@ export default function HeroSection() {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Hero Background Image */}
+      <div className="absolute inset-0">
+        <Image
+          src="/images/herobackground.png"
+          alt="Basketball court background"
+          fill
+          className="object-cover"
+          priority
+        />
+        <div className="absolute inset-0 bg-black/40" />
+      </div>
+      
       {/* Simplified Background - No animations on mobile */}
       <div className={`absolute inset-0 ${isMobile ? 'bg-gradient-to-br from-dark-bg to-gray-900' : 'court-pattern'}`} />
       
