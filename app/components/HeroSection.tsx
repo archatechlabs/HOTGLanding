@@ -5,41 +5,26 @@ import Image from 'next/image'
 import { Circle, ArrowRight, Play, Star } from 'lucide-react'
 import { useState, useEffect, useRef } from 'react'
 
-// Animated Counter Component - Mobile Optimized
+// Animated Counter Component - Desktop Only
 function AnimatedCounter({ target, duration, delay }: { target: number; duration: number; delay: number }) {
   const [count, setCount] = useState(0)
   const [hasAnimated, setHasAnimated] = useState(false)
   const counterRef = useRef<HTMLSpanElement>(null)
-  const [isMobile, setIsMobile] = useState(false)
-
-  useEffect(() => {
-    // Detect mobile device
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768)
-    }
-    
-    checkMobile()
-    window.addEventListener('resize', checkMobile)
-    
-    return () => window.removeEventListener('resize', checkMobile)
-  }, [])
 
   useEffect(() => {
     if (hasAnimated) return
 
+    console.log('Setting up counter observer for target:', target)
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
+          console.log('Counter intersection:', entry.isIntersecting, 'hasAnimated:', hasAnimated)
           if (entry.isIntersecting && !hasAnimated) {
             setHasAnimated(true)
+            console.log('Starting counter animation for target:', target)
             
-            // On mobile, show final number immediately to avoid performance issues
-            if (isMobile) {
-              setCount(target)
-              return
-            }
-            
-            // Desktop animation
+            // Start animation after delay
             setTimeout(() => {
               const startTime = Date.now()
               const startValue = 0
@@ -64,7 +49,7 @@ function AnimatedCounter({ target, duration, delay }: { target: number; duration
           }
         })
       },
-      { threshold: 0.3 }
+      { threshold: 0.1 }
     )
 
     if (counterRef.current) {
@@ -76,7 +61,7 @@ function AnimatedCounter({ target, duration, delay }: { target: number; duration
         observer.unobserve(counterRef.current)
       }
     }
-  }, [target, duration, delay, hasAnimated, isMobile])
+  }, [target, duration, delay, hasAnimated])
 
   return <span ref={counterRef}>{count.toLocaleString()}</span>
 }
