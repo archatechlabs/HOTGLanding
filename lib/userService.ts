@@ -16,6 +16,7 @@ import {
   getDocs
 } from 'firebase/firestore'
 import { auth, db } from './firebase'
+import { trackUserRegistration, trackUserLogin } from './analytics'
 
 export interface UserProfile {
   uid: string
@@ -43,15 +44,6 @@ export interface RegistrationData {
 // Register a new user with email/password and create profile
 export async function registerUser(data: RegistrationData) {
   try {
-    // Check if Firebase is properly configured
-    if (!process.env.NEXT_PUBLIC_FIREBASE_API_KEY || process.env.NEXT_PUBLIC_FIREBASE_API_KEY === 'demo-key') {
-      return {
-        success: false,
-        error: 'Firebase not configured. Please set up your Firebase environment variables.',
-        message: 'Registration failed - Firebase not configured'
-      }
-    }
-
     // Create user account with email and password
     const userCredential = await createUserWithEmailAndPassword(
       auth, 
@@ -83,6 +75,9 @@ export async function registerUser(data: RegistrationData) {
     // Save user profile to Firestore
     await setDoc(doc(db, 'users', user.uid), userProfile)
 
+    // Track user registration in analytics
+    trackUserRegistration(user.uid, userProfile)
+
     return {
       success: true,
       user: userProfile,
@@ -101,20 +96,14 @@ export async function registerUser(data: RegistrationData) {
 // Sign in user with email and password
 export async function signInUser(email: string, password: string) {
   try {
-    // Check if Firebase is properly configured
-    if (!process.env.NEXT_PUBLIC_FIREBASE_API_KEY || process.env.NEXT_PUBLIC_FIREBASE_API_KEY === 'demo-key') {
-      return {
-        success: false,
-        error: 'Firebase not configured. Please set up your Firebase environment variables.',
-        message: 'Sign in failed - Firebase not configured'
-      }
-    }
-
     const userCredential = await signInWithEmailAndPassword(auth, email, password)
     const user = userCredential.user
     
     // Get user profile from Firestore
     const userProfile = await getUserProfile(user.uid)
+    
+    // Track user login in analytics
+    trackUserLogin(user.uid)
     
     return {
       success: true,

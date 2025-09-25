@@ -1,16 +1,16 @@
 import { initializeApp, getApps } from 'firebase/app'
 import { getAuth } from 'firebase/auth'
 import { getFirestore } from 'firebase/firestore'
+import { getAnalytics, isSupported } from 'firebase/analytics'
 
 const firebaseConfig = {
-  // You'll need to replace these with your actual Firebase config
-  // Get these from Firebase Console > Project Settings > General > Your apps
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY || 'demo-key',
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN || 'demo-project.firebaseapp.com',
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || 'demo-project',
-  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET || 'demo-project.appspot.com',
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID || '123456789',
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID || '1:123456789:web:abcdef'
+  apiKey: "AIzaSyAhMoOPSsp9Ixf90UJUvVBZEoiCaswe434",
+  authDomain: "historyofthegame.firebaseapp.com",
+  projectId: "historyofthegame",
+  storageBucket: "historyofthegame.firebasestorage.app",
+  messagingSenderId: "721226438679",
+  appId: "1:721226438679:web:d9e444ac51f891e5a6e452",
+  measurementId: "G-WPNGPCM4HJ"
 }
 
 // Initialize Firebase only if it hasn't been initialized already
@@ -21,5 +21,8 @@ export const auth = getAuth(app)
 
 // Initialize Cloud Firestore and get a reference to the service
 export const db = getFirestore(app)
+
+// Initialize Firebase Analytics (only in browser environment)
+export const analytics = typeof window !== 'undefined' && isSupported() ? getAnalytics(app) : null
 
 export default app

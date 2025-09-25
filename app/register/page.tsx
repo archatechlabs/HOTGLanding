@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { ArrowLeft, User, Mail, Phone, MapPin, Star, Wallet, CheckCircle, AlertCircle } from 'lucide-react'
+import { trackFormSubmission, trackButtonClick } from '@/lib/analytics'
 
 const favoritePlayers = [
   'Michael Jordan', 'LeBron James', 'Kobe Bryant', 'Magic Johnson', 'Larry Bird',
@@ -72,6 +73,7 @@ export default function RegisterPage() {
       
       if (response.ok) {
         setSubmitStatus('success')
+        trackFormSubmission('user_registration', true)
         // Reset form after successful submission
         setFormData({
           name: '',
@@ -84,6 +86,7 @@ export default function RegisterPage() {
         })
       } else {
         setSubmitStatus('error')
+        trackFormSubmission('user_registration', false)
       }
     } catch (error) {
       console.error('Registration error:', error)
