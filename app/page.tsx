@@ -7,6 +7,7 @@ import MobileHeroSection from './components/MobileHeroSection'
 import MuseumShowcase from './components/MuseumShowcase'
 import StaticMuseumShowcase from './components/StaticMuseumShowcase'
 import Web3Features from './components/Web3Features'
+import IRLEvents from './components/IRLEvents'
 import CallToAction from './components/CallToAction'
 import Footer from './components/Footer'
 import LogoAnimation from './components/LogoAnimation'
@@ -62,6 +63,7 @@ export default function Home() {
         <MobileHeroSection />
         <StaticMuseumShowcase />
         <Web3Features />
+        <IRLEvents />
         <CallToAction />
         <Footer />
       </main>
@@ -89,6 +91,7 @@ export default function Home() {
         <HeroSection />
         <MuseumShowcase />
         <Web3Features />
+        <IRLEvents />
         <CallToAction />
         <Footer />
       </motion.main>
