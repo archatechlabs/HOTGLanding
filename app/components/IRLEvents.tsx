@@ -6,6 +6,15 @@ import { MapPin, Calendar, Users, Globe, Star, Clock } from 'lucide-react'
 export default function IRLEvents() {
   const upcomingEvents = [
     {
+      city: "New York City",
+      country: "USA",
+      date: "November 7, 2025",
+      venue: "History of the Game Launch Event",
+      description: "The official launch of History of the Game! Join us for the grand opening of our Web3 basketball museum with exclusive NFT drops, legendary player appearances, and the future of basketball storytelling.",
+      status: "Upcoming",
+      capacity: "15,000 visitors"
+    },
+    {
       city: "Los Angeles",
       country: "USA",
       date: "February 13-16, 2026",
@@ -17,20 +26,11 @@ export default function IRLEvents() {
     {
       city: "Tokyo",
       country: "Japan", 
-      date: "April 20-22, 2024",
+      date: "April 20-22, 2026",
       venue: "Tokyo Dome",
       description: "Join us for our first international pop-up featuring Japanese basketball legends and cutting-edge technology integration.",
       status: "Upcoming",
       capacity: "8,000 visitors"
-    },
-    {
-      city: "London",
-      country: "UK",
-      date: "May 10-12, 2024", 
-      venue: "O2 Arena",
-      description: "European debut of our immersive basketball museum with exclusive European basketball history and Web3 innovations.",
-      status: "Upcoming",
-      capacity: "6,000 visitors"
     }
   ]
 
