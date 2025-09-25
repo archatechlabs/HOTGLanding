@@ -56,7 +56,7 @@ export async function POST(request: NextRequest) {
     })
 
     if (result.success) {
-      console.log('New user registered with Firebase:', {
+      console.log('🎉 NEW USER REGISTERED:', {
         uid: result.user?.uid,
         name: result.user?.displayName,
         email: result.user?.email,
@@ -68,7 +68,7 @@ export async function POST(request: NextRequest) {
       })
 
       // Send welcome email (for now, just log the data)
-      await logWelcomeEmail({
+      const emailResult = await logWelcomeEmail({
         name: result.user?.displayName || '',
         email: result.user?.email || '',
         city: result.user?.city || '',
@@ -76,15 +76,23 @@ export async function POST(request: NextRequest) {
         favoritePlayer: result.user?.favoritePlayer || ''
       })
 
+      console.log('📧 Email notification result:', emailResult)
+
       return NextResponse.json(
         { 
           success: true, 
           message: 'Registration successful - Welcome email sent!',
-          userId: result.user?.uid 
+          userId: result.user?.uid,
+          userEmail: result.user?.email
         },
         { status: 201 }
       )
     } else {
+      console.error('❌ REGISTRATION FAILED:', {
+        error: result.error,
+        message: result.message,
+        email: body.email
+      })
       return NextResponse.json(
         { error: result.error || 'Registration failed' },
         { status: 400 }

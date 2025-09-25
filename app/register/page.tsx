@@ -36,6 +36,7 @@ export default function RegisterPage() {
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [countdown, setCountdown] = useState(5)
+  const [debugInfo, setDebugInfo] = useState<any>(null)
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {}
@@ -76,7 +77,11 @@ export default function RegisterPage() {
       
       const data = await response.json()
       
+      console.log('Registration response:', { status: response.status, data })
+      setDebugInfo({ status: response.status, data })
+      
       if (response.ok) {
+        console.log('✅ Registration successful!', data)
         setSubmitStatus('success')
         trackFormSubmission('user_registration', true)
         // Reset form after successful submission
@@ -90,6 +95,7 @@ export default function RegisterPage() {
           walletAddress: ''
         })
       } else {
+        console.error('❌ Registration failed:', { status: response.status, error: data.error })
         setSubmitStatus('error')
         trackFormSubmission('user_registration', false)
         
@@ -158,9 +164,20 @@ export default function RegisterPage() {
             <p className="text-lg text-gray-400 mb-4">
               We'll keep you updated on exclusive events, airdrops, and the future of basketball storytelling.
             </p>
-            <p className="text-sm text-gray-500 mb-8">
+            <p className="text-sm text-gray-500 mb-4">
               Redirecting to home page in {countdown} seconds...
             </p>
+            
+            {/* Debug Info */}
+            {debugInfo && (
+              <div className="bg-gray-800/50 p-4 rounded-lg text-left text-sm">
+                <p className="text-green-400 mb-2">✅ Registration Details:</p>
+                <p><strong>Status:</strong> {debugInfo.status}</p>
+                <p><strong>User ID:</strong> {debugInfo.data?.userId || 'N/A'}</p>
+                <p><strong>Email:</strong> {debugInfo.data?.userEmail || 'N/A'}</p>
+                <p><strong>Message:</strong> {debugInfo.data?.message || 'N/A'}</p>
+              </div>
+            )}
           </motion.div>
           
           <motion.div
@@ -382,11 +399,18 @@ export default function RegisterPage() {
             <motion.button
               type="submit"
               disabled={isSubmitting}
-              className="w-full py-4 px-6 bg-gradient-to-r from-neon-blue to-neon-purple rounded-lg font-semibold text-lg text-white hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full py-4 px-6 bg-gradient-to-r from-neon-blue to-neon-purple rounded-lg font-semibold text-lg text-white hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
-              {isSubmitting ? 'Joining...' : 'Join the Community'}
+              {isSubmitting ? (
+                <>
+                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                  Creating Account...
+                </>
+              ) : (
+                'Join the Community'
+              )}
             </motion.button>
 
             {/* Status Messages */}
