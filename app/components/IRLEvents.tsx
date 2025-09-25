@@ -24,13 +24,13 @@ export default function IRLEvents() {
       capacity: "10,000 visitors"
     },
     {
-      city: "Tokyo",
-      country: "Japan", 
-      date: "April 20-22, 2026",
-      venue: "Tokyo Dome",
-      description: "Join us for our first international pop-up featuring Japanese basketball legends and cutting-edge technology integration.",
+      city: "Las Vegas",
+      country: "USA", 
+      date: "July 2026",
+      venue: "History of the Game NBA Summer League Pop-up Experience",
+      description: "Experience the future of basketball at the NBA Summer League! Join us for an immersive pop-up museum featuring rising stars, exclusive memorabilia, and cutting-edge Web3 technology integration.",
       status: "Upcoming",
-      capacity: "8,000 visitors"
+      capacity: "12,000 visitors"
     }
   ]
 
