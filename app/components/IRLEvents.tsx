@@ -8,11 +8,11 @@ export default function IRLEvents() {
     {
       city: "Los Angeles",
       country: "USA",
-      date: "March 15-17, 2024",
-      venue: "Crypto.com Arena",
-      description: "Experience basketball history like never before at our flagship pop-up museum featuring exclusive memorabilia and interactive Web3 exhibits.",
+      date: "February 13-16, 2026",
+      venue: "NBA All-Star Weekend 2026 HOTG Induction",
+      description: "Join us for the historic induction of History of the Game into the NBA All-Star Weekend festivities. Experience exclusive memorabilia, meet basketball legends, and witness the future of basketball storytelling.",
       status: "Upcoming",
-      capacity: "5,000 visitors"
+      capacity: "10,000 visitors"
     },
     {
       city: "Tokyo",
