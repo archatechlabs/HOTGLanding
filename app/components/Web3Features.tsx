@@ -39,16 +39,16 @@ export default function Web3Features() {
       color: "from-purple-400 to-pink-500"
     },
     {
-      title: "Instant Transactions",
-      description: "Buy, sell, and trade collectibles instantly with lightning-fast blockchain technology.",
+      title: "Lightning-Fast Transactions",
+      description: "Experience sub-second transaction speeds with Solana's high-performance blockchain network.",
       icon: Zap,
       color: "from-yellow-400 to-red-500"
     },
     {
-      title: "AI-Powered Stories",
-      description: "Discover personalized basketball stories and recommendations powered by advanced AI.",
-      icon: Sparkles,
-      color: "from-indigo-400 to-purple-500"
+      title: "Low-Cost Transactions",
+      description: "Enjoy minimal transaction fees with Solana's efficient consensus mechanism, making digital collectibles accessible to everyone.",
+      icon: Coins,
+      color: "from-green-400 to-emerald-500"
     }
   ]
 
@@ -70,11 +70,11 @@ export default function Web3Features() {
           className="text-center mb-16"
         >
           <h2 className="text-5xl md:text-6xl font-orbitron font-bold mb-6">
-            Powered by <span className="gradient-text">Web3</span>
+            Powered by <span className="gradient-text">Solana</span>
           </h2>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            Experience the future of digital collectibles and interactive storytelling 
-            with cutting-edge blockchain technology.
+            Experience lightning-fast transactions and low-cost digital collectibles 
+            on the world's fastest blockchain network.
           </p>
         </motion.div>
 
@@ -133,13 +133,13 @@ export default function Web3Features() {
                   Built for the Future
                 </h3>
                 <p className="text-lg text-gray-300 mb-8 leading-relaxed">
-                  Our platform leverages the latest in Web3 technology to create an 
+                  Our platform leverages Solana's high-performance blockchain to create an 
                   immersive, secure, and truly decentralized basketball museum experience. 
-                  Every interaction is recorded on the blockchain, ensuring authenticity 
-                  and permanent ownership of your digital collectibles.
+                  With sub-second transaction speeds and minimal fees, every interaction 
+                  is recorded on-chain, ensuring authenticity and permanent ownership of your digital collectibles.
                 </p>
                 <div className="flex flex-wrap gap-4">
-                  {['Ethereum', 'Polygon', 'IPFS', 'Web3.js', 'React', 'Next.js'].map((tech, index) => (
+                  {['Solana', 'Metaplex', 'Anchor', 'Web3.js', 'React', 'Next.js'].map((tech, index) => (
                     <motion.span
                       key={tech}
                       className="px-4 py-2 glass rounded-full text-sm font-medium text-white border border-white/20"
