@@ -1,23 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-
-// In a production environment, you would use a proper database
-// For now, we'll use a simple in-memory store for demonstration
-// In production, replace this with your database of choice (PostgreSQL, MongoDB, etc.)
-
-interface UserData {
-  name: string
-  email: string
-  phone: string
-  city: string
-  state: string
-  favoritePlayer: string
-  walletAddress: string
-  registeredAt: string
-  id: string
-}
-
-// Simple in-memory store (replace with database in production)
-const users: UserData[] = []
+import { registerUser, checkEmailExists } from '@/lib/userService'
 
 export async function POST(request: NextRequest) {
   try {
@@ -52,57 +34,52 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Check if email already exists
-    const existingUser = users.find(user => user.email.toLowerCase() === body.email.toLowerCase())
-    if (existingUser) {
+    // Check if email already exists in Firebase
+    const emailExists = await checkEmailExists(body.email)
+    if (emailExists) {
       return NextResponse.json(
         { error: 'Email already registered' },
         { status: 409 }
       )
     }
 
-    // Create user data
-    const userData: UserData = {
-      id: generateId(),
+    // Register user with Firebase
+    const result = await registerUser({
       name: body.name.trim(),
       email: body.email.toLowerCase().trim(),
       phone: body.phone.trim(),
       city: body.city.trim(),
       state: body.state.trim(),
       favoritePlayer: body.favoritePlayer.trim(),
-      walletAddress: body.walletAddress.trim(),
-      registeredAt: new Date().toISOString()
-    }
-
-    // Store user data (in production, save to database)
-    users.push(userData)
-
-    // In production, you would also:
-    // 1. Send welcome email
-    // 2. Add to email marketing list
-    // 3. Send SMS confirmation
-    // 4. Log registration event
-    // 5. Trigger welcome sequence
-
-    console.log('New user registered:', {
-      id: userData.id,
-      name: userData.name,
-      email: userData.email,
-      city: userData.city,
-      state: userData.state,
-      favoritePlayer: userData.favoritePlayer,
-      walletAddress: userData.walletAddress,
-      registeredAt: userData.registeredAt
+      walletAddress: body.walletAddress.trim()
     })
 
-    return NextResponse.json(
-      { 
-        success: true, 
-        message: 'Registration successful',
-        userId: userData.id 
-      },
-      { status: 201 }
-    )
+    if (result.success) {
+      console.log('New user registered with Firebase:', {
+        uid: result.user?.uid,
+        name: result.user?.displayName,
+        email: result.user?.email,
+        city: result.user?.city,
+        state: result.user?.state,
+        favoritePlayer: result.user?.favoritePlayer,
+        walletAddress: result.user?.walletAddress,
+        createdAt: result.user?.createdAt
+      })
+
+      return NextResponse.json(
+        { 
+          success: true, 
+          message: 'Registration successful',
+          userId: result.user?.uid 
+        },
+        { status: 201 }
+      )
+    } else {
+      return NextResponse.json(
+        { error: result.error || 'Registration failed' },
+        { status: 400 }
+      )
+    }
 
   } catch (error) {
     console.error('Registration error:', error)
@@ -117,20 +94,30 @@ export async function POST(request: NextRequest) {
 export async function GET() {
   try {
     // In production, add authentication and authorization
-    return NextResponse.json({
-      success: true,
-      users: users.map(user => ({
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        city: user.city,
-        state: user.state,
-        favoritePlayer: user.favoritePlayer,
-        registeredAt: user.registeredAt
-        // Don't return sensitive data like phone and wallet address
-      })),
-      total: users.length
-    })
+    const { getAllUsers } = await import('@/lib/userService')
+    const result = await getAllUsers()
+    
+    if (result.success) {
+      return NextResponse.json({
+        success: true,
+        users: result.users.map(user => ({
+          uid: user.uid,
+          name: user.displayName,
+          email: user.email,
+          city: user.city,
+          state: user.state,
+          favoritePlayer: user.favoritePlayer,
+          createdAt: user.createdAt
+          // Don't return sensitive data like phone and wallet address
+        })),
+        total: result.total
+      })
+    } else {
+      return NextResponse.json(
+        { error: result.error || 'Failed to retrieve users' },
+        { status: 500 }
+      )
+    }
   } catch (error) {
     console.error('Error retrieving users:', error)
     return NextResponse.json(
@@ -138,9 +125,4 @@ export async function GET() {
       { status: 500 }
     )
   }
-}
-
-// Helper function to generate unique ID
-function generateId(): string {
-  return Math.random().toString(36).substr(2, 9) + Date.now().toString(36)
 }
