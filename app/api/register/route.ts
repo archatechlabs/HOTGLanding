@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { registerUser, checkEmailExists } from '@/lib/userService'
+import { logWelcomeEmail } from '@/lib/emailService'
 
 export async function POST(request: NextRequest) {
   try {
@@ -66,10 +67,19 @@ export async function POST(request: NextRequest) {
         createdAt: result.user?.createdAt
       })
 
+      // Send welcome email (for now, just log the data)
+      await logWelcomeEmail({
+        name: result.user?.displayName || '',
+        email: result.user?.email || '',
+        city: result.user?.city || '',
+        state: result.user?.state || '',
+        favoritePlayer: result.user?.favoritePlayer || ''
+      })
+
       return NextResponse.json(
         { 
           success: true, 
-          message: 'Registration successful',
+          message: 'Registration successful - Welcome email sent!',
           userId: result.user?.uid 
         },
         { status: 201 }

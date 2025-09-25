@@ -1,8 +1,9 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { ArrowLeft, User, Mail, Phone, MapPin, Star, Wallet, CheckCircle, AlertCircle } from 'lucide-react'
 import { trackFormSubmission, trackButtonClick } from '@/lib/analytics'
 
@@ -20,6 +21,7 @@ const favoritePlayers = [
 ]
 
 export default function RegisterPage() {
+  const router = useRouter()
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -33,6 +35,7 @@ export default function RegisterPage() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
   const [errors, setErrors] = useState<Record<string, string>>({})
+  const [countdown, setCountdown] = useState(5)
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {}
@@ -71,6 +74,8 @@ export default function RegisterPage() {
         body: JSON.stringify(formData),
       })
       
+      const data = await response.json()
+      
       if (response.ok) {
         setSubmitStatus('success')
         trackFormSubmission('user_registration', true)
@@ -87,6 +92,13 @@ export default function RegisterPage() {
       } else {
         setSubmitStatus('error')
         trackFormSubmission('user_registration', false)
+        
+        // Handle specific error cases
+        if (response.status === 409) {
+          setErrors({ general: 'This email is already registered. Please try signing in instead.' })
+        } else {
+          setErrors({ general: data.error || 'Registration failed. Please try again.' })
+        }
       }
     } catch (error) {
       console.error('Registration error:', error)
@@ -103,6 +115,23 @@ export default function RegisterPage() {
       setErrors(prev => ({ ...prev, [field]: '' }))
     }
   }
+
+  // Auto-redirect after successful registration
+  useEffect(() => {
+    if (submitStatus === 'success') {
+      const timer = setInterval(() => {
+        setCountdown(prev => {
+          if (prev <= 1) {
+            router.push('/')
+            return 0
+          }
+          return prev - 1
+        })
+      }, 1000)
+
+      return () => clearInterval(timer)
+    }
+  }, [submitStatus, router])
 
   if (submitStatus === 'success') {
     return (
@@ -123,8 +152,14 @@ export default function RegisterPage() {
             <h1 className="text-4xl md:text-5xl font-orbitron font-bold gradient-text mb-4">
               Welcome to the Game!
             </h1>
-            <p className="text-xl text-gray-300 mb-8">
-              You're now part of the History of the Game community. We'll keep you updated on exclusive events, airdrops, and the future of basketball storytelling.
+            <p className="text-xl text-gray-300 mb-4">
+              You're now officially subscribed to History of the Game! Check your email for a confirmation message.
+            </p>
+            <p className="text-lg text-gray-400 mb-4">
+              We'll keep you updated on exclusive events, airdrops, and the future of basketball storytelling.
+            </p>
+            <p className="text-sm text-gray-500 mb-8">
+              Redirecting to home page in {countdown} seconds...
             </p>
           </motion.div>
           
@@ -356,9 +391,16 @@ export default function RegisterPage() {
 
             {/* Status Messages */}
             {submitStatus === 'error' && (
-              <div className="flex items-center gap-2 text-red-400 text-sm">
-                <AlertCircle size={16} />
-                Something went wrong. Please try again.
+              <div className="text-center">
+                <div className="flex items-center justify-center gap-2 text-red-400 text-sm mb-2">
+                  <AlertCircle size={16} />
+                  {errors.general || 'Something went wrong. Please try again.'}
+                </div>
+                {errors.general && errors.general.includes('already registered') && (
+                  <Link href="/login" className="text-neon-blue hover:underline text-sm">
+                    Sign in to your account instead
+                  </Link>
+                )}
               </div>
             )}
           </form>
