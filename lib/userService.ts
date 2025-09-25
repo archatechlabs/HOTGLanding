@@ -43,6 +43,15 @@ export interface RegistrationData {
 // Register a new user with email/password and create profile
 export async function registerUser(data: RegistrationData) {
   try {
+    // Check if Firebase is properly configured
+    if (!process.env.NEXT_PUBLIC_FIREBASE_API_KEY || process.env.NEXT_PUBLIC_FIREBASE_API_KEY === 'demo-key') {
+      return {
+        success: false,
+        error: 'Firebase not configured. Please set up your Firebase environment variables.',
+        message: 'Registration failed - Firebase not configured'
+      }
+    }
+
     // Create user account with email and password
     const userCredential = await createUserWithEmailAndPassword(
       auth, 
@@ -92,6 +101,15 @@ export async function registerUser(data: RegistrationData) {
 // Sign in user with email and password
 export async function signInUser(email: string, password: string) {
   try {
+    // Check if Firebase is properly configured
+    if (!process.env.NEXT_PUBLIC_FIREBASE_API_KEY || process.env.NEXT_PUBLIC_FIREBASE_API_KEY === 'demo-key') {
+      return {
+        success: false,
+        error: 'Firebase not configured. Please set up your Firebase environment variables.',
+        message: 'Sign in failed - Firebase not configured'
+      }
+    }
+
     const userCredential = await signInWithEmailAndPassword(auth, email, password)
     const user = userCredential.user
     
