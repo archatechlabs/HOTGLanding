@@ -15,11 +15,20 @@ export const metadata: Metadata = {
     description: 'Experience basketball history like never before in our immersive Web3 storytelling museum.',
     type: 'website',
     locale: 'en_US',
+    images: [
+      {
+        url: '/opengraph-image',
+        width: 1200,
+        height: 630,
+        alt: 'History of the Game - Web3 Basketball Museum',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'History of the Game | Web3 Basketball Museum',
     description: 'Experience basketball history like never before in our immersive Web3 storytelling museum.',
+    images: ['/opengraph-image'],
   },
 }
 
