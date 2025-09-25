@@ -1,7 +1,8 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Star, Users, Zap } from 'lucide-react'
+import Link from 'next/link'
+import { Star, Users, Zap, ArrowRight } from 'lucide-react'
 
 export default function CallToAction() {
   return (
@@ -47,8 +48,19 @@ export default function CallToAction() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
               viewport={{ once: true }}
-              className="flex justify-center items-center mb-12"
+              className="flex flex-col sm:flex-row justify-center items-center gap-4 mb-12"
             >
+              <Link href="/register">
+                <motion.button
+                  className="group flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-neon-blue to-neon-purple rounded-full font-semibold text-lg text-white hover:opacity-90 transition-opacity"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  Start Your Journey
+                  <ArrowRight className="group-hover:translate-x-1 transition-transform" size={20} />
+                </motion.button>
+              </Link>
+              
               <motion.button
                 className="group flex items-center gap-2 px-8 py-4 glass rounded-full font-semibold text-lg text-white hover:bg-white/20 transition-all border border-white/30"
                 whileHover={{ scale: 1.05 }}

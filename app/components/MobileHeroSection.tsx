@@ -1,7 +1,8 @@
 'use client'
 
 import Image from 'next/image'
-import { Star, Play } from 'lucide-react'
+import Link from 'next/link'
+import { Star, Play, ArrowRight } from 'lucide-react'
 
 // Static Counter Component for Mobile - No animations
 function StaticCounter({ target }: { target: number }) {
@@ -61,7 +62,14 @@ export default function MobileHeroSection() {
         </div>
 
         {/* CTA Buttons - Static */}
-        <div className="flex justify-center items-center mb-16">
+        <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mb-16">
+          <Link href="/register">
+            <button className="group flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-neon-blue to-neon-purple rounded-full font-semibold text-lg text-white hover:opacity-90 transition-opacity">
+              Start Your Journey
+              <ArrowRight className="group-hover:translate-x-1 transition-transform" size={20} />
+            </button>
+          </Link>
+          
           <button className="group flex items-center gap-2 px-8 py-4 glass rounded-full font-semibold text-lg text-white hover:bg-white/20 transition-all">
             <Play className="group-hover:scale-110 transition-transform" size={20} />
             Watch Trailer
