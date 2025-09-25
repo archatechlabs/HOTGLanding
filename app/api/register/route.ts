@@ -4,13 +4,21 @@ import { logWelcomeEmail } from '@/lib/emailService'
 
 export async function POST(request: NextRequest) {
   try {
+    console.log('🚀 Registration API called')
     const body = await request.json()
+    console.log('📝 Registration data received:', { 
+      name: body.name, 
+      email: body.email, 
+      city: body.city, 
+      state: body.state 
+    })
     
     // Validate required fields
     const requiredFields = ['name', 'email', 'phone', 'city', 'state', 'favoritePlayer', 'walletAddress']
     const missingFields = requiredFields.filter(field => !body[field]?.trim())
     
     if (missingFields.length > 0) {
+      console.log('❌ Missing required fields:', missingFields)
       return NextResponse.json(
         { error: `Missing required fields: ${missingFields.join(', ')}` },
         { status: 400 }
@@ -20,6 +28,7 @@ export async function POST(request: NextRequest) {
     // Validate email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     if (!emailRegex.test(body.email)) {
+      console.log('❌ Invalid email format:', body.email)
       return NextResponse.json(
         { error: 'Invalid email format' },
         { status: 400 }
@@ -29,6 +38,7 @@ export async function POST(request: NextRequest) {
     // Validate Solana wallet address format
     const solanaAddressRegex = /^[1-9A-HJ-NP-Za-km-z]{32,44}$/
     if (!solanaAddressRegex.test(body.walletAddress)) {
+      console.log('❌ Invalid Solana wallet address format:', body.walletAddress)
       return NextResponse.json(
         { error: 'Invalid Solana wallet address format' },
         { status: 400 }
@@ -36,8 +46,10 @@ export async function POST(request: NextRequest) {
     }
 
     // Check if email already exists in Firebase
+    console.log('🔍 Checking if email exists...')
     const emailExists = await checkEmailExists(body.email)
     if (emailExists) {
+      console.log('❌ Email already exists:', body.email)
       return NextResponse.json(
         { error: 'Email already registered' },
         { status: 409 }
@@ -45,6 +57,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Register user with Firebase
+    console.log('👤 Registering user with Firebase...')
     const result = await registerUser({
       name: body.name.trim(),
       email: body.email.toLowerCase().trim(),
@@ -68,6 +81,7 @@ export async function POST(request: NextRequest) {
       })
 
       // Send welcome email (for now, just log the data)
+      console.log('📧 Sending welcome email...')
       const emailResult = await logWelcomeEmail({
         name: result.user?.displayName || '',
         email: result.user?.email || '',
@@ -100,7 +114,7 @@ export async function POST(request: NextRequest) {
     }
 
   } catch (error) {
-    console.error('Registration error:', error)
+    console.error('❌ Registration API error:', error)
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

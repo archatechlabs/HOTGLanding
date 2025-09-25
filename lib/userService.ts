@@ -41,15 +41,46 @@ export interface RegistrationData {
   walletAddress: string
 }
 
+// Generate a temporary password for new users
+function generateTemporaryPassword(): string {
+  // Generate a random password that meets Firebase requirements
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*'
+  let password = ''
+  
+  // Ensure at least one uppercase, one lowercase, one number, and one special char
+  password += 'A' // uppercase
+  password += 'a' // lowercase  
+  password += '1' // number
+  password += '!' // special char
+  
+  // Fill the rest randomly
+  for (let i = 4; i < 12; i++) {
+    password += chars.charAt(Math.floor(Math.random() * chars.length))
+  }
+  
+  // Shuffle the password
+  return password.split('').sort(() => Math.random() - 0.5).join('')
+}
+
 // Register a new user with email/password and create profile
 export async function registerUser(data: RegistrationData) {
   try {
-    // Create user account with email and password
-    const userCredential = await createUserWithEmailAndPassword(
+    console.log('🚀 Starting user registration for:', data.email)
+    
+    // Add timeout wrapper for Firebase operations
+    const timeoutPromise = new Promise((_, reject) => 
+      setTimeout(() => reject(new Error('Registration timeout after 30 seconds')), 30000)
+    )
+    
+    const registrationPromise = createUserWithEmailAndPassword(
       auth, 
       data.email, 
-      generateTemporaryPassword() // We'll generate a temp password
+      generateTemporaryPassword()
     )
+    
+    // Race between registration and timeout
+    const userCredential = await Promise.race([registrationPromise, timeoutPromise]) as any
+    console.log('✅ Firebase user created successfully')
     
     const user = userCredential.user
 
@@ -57,6 +88,7 @@ export async function registerUser(data: RegistrationData) {
     await updateProfile(user, {
       displayName: data.name
     })
+    console.log('✅ User profile updated with display name')
 
     // Create user profile in Firestore
     const userProfile: UserProfile = {
@@ -74,6 +106,7 @@ export async function registerUser(data: RegistrationData) {
 
     // Save user profile to Firestore
     await setDoc(doc(db, 'users', user.uid), userProfile)
+    console.log('✅ User profile saved to Firestore')
 
     // Track user registration in analytics
     trackUserRegistration(user.uid, userProfile)
@@ -84,7 +117,7 @@ export async function registerUser(data: RegistrationData) {
       message: 'Registration successful'
     }
   } catch (error: any) {
-    console.error('Registration error:', error)
+    console.error('❌ Registration error:', error)
     return {
       success: false,
       error: error.message,
@@ -209,34 +242,16 @@ export async function getAllUsers() {
 // Check if email already exists
 export async function checkEmailExists(email: string) {
   try {
+    console.log('🔍 Checking if email exists:', email)
     const usersRef = collection(db, 'users')
     const q = query(usersRef, where('email', '==', email.toLowerCase()))
     const snapshot = await getDocs(q)
     
-    return !snapshot.empty
+    const exists = !snapshot.empty
+    console.log('📧 Email exists check result:', exists)
+    return exists
   } catch (error) {
     console.error('Error checking email:', error)
     return false
   }
-}
-
-// Generate a temporary password for new users
-function generateTemporaryPassword(): string {
-  // Generate a random password that meets Firebase requirements
-  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*'
-  let password = ''
-  
-  // Ensure at least one uppercase, one lowercase, one number, and one special char
-  password += 'A' // uppercase
-  password += 'a' // lowercase  
-  password += '1' // number
-  password += '!' // special char
-  
-  // Fill the rest randomly
-  for (let i = 4; i < 12; i++) {
-    password += chars.charAt(Math.floor(Math.random() * chars.length))
-  }
-  
-  // Shuffle the password
-  return password.split('').sort(() => Math.random() - 0.5).join('')
 }

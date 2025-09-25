@@ -8,6 +8,7 @@ import { ArrowLeft, User, Mail, Phone, MapPin, Star, Wallet, CheckCircle, AlertC
 import { trackFormSubmission, trackButtonClick } from '@/lib/analytics'
 
 const favoritePlayers = [
+  // All-Time Greats (Top Tier)
   'Michael Jordan', 'LeBron James', 'Kobe Bryant', 'Magic Johnson', 'Larry Bird',
   'Shaquille O\'Neal', 'Tim Duncan', 'Kareem Abdul-Jabbar', 'Wilt Chamberlain',
   'Bill Russell', 'Oscar Robertson', 'Jerry West', 'Elgin Baylor', 'Julius Erving',
@@ -17,6 +18,98 @@ const favoritePlayers = [
   'Kevin Garnett', 'Paul Pierce', 'Ray Allen', 'Dwyane Wade', 'Chris Paul',
   'Russell Westbrook', 'James Harden', 'Stephen Curry', 'Kevin Durant',
   'Kawhi Leonard', 'Giannis Antetokounmpo', 'Luka Dončić', 'Jayson Tatum',
+  
+  // Current NBA Stars (2020s)
+  'Joel Embiid', 'Nikola Jokic', 'Anthony Davis', 'Jimmy Butler', 'Damian Lillard',
+  'Kyrie Irving', 'Devin Booker', 'Bradley Beal', 'Zach LaVine', 'Donovan Mitchell',
+  'Trae Young', 'Ja Morant', 'Zion Williamson', 'Anthony Edwards', 'LaMelo Ball',
+  'Cade Cunningham', 'Evan Mobley', 'Scottie Barnes', 'Franz Wagner', 'Paolo Banchero',
+  'Chet Holmgren', 'Victor Wembanyama', 'Scoot Henderson', 'Brandon Miller',
+  'Tyrese Haliburton', 'De\'Aaron Fox', 'Domantas Sabonis', 'Pascal Siakam',
+  'Bam Adebayo', 'Jaylen Brown', 'Kristaps Porziņģis', 'Rudy Gobert',
+  'Karl-Anthony Towns', 'Deandre Ayton', 'Jaren Jackson Jr.', 'Zach Collins',
+  'Myles Turner', 'Brook Lopez', 'Al Horford', 'Robert Williams III',
+  'Marcus Smart', 'Derrick White', 'Malcolm Brogdon', 'Payton Pritchard',
+  'Sam Hauser', 'Grant Williams', 'Jrue Holiday', 'Khris Middleton',
+  'Bobby Portis', 'Pat Connaughton', 'Grayson Allen', 'Jevon Carter',
+  
+  // 2010s Era Stars
+  'Blake Griffin', 'Derrick Rose', 'John Wall', 'DeMarcus Cousins', 'Paul George',
+  'Klay Thompson', 'Draymond Green', 'Andre Iguodala', 'Kyle Lowry', 'DeMar DeRozan',
+  'Gordon Hayward', 'Kemba Walker', 'Isaiah Thomas', 'Hassan Whiteside', 'Andre Drummond',
+  'Jeff Teague', 'Kyle Korver', 'Thabo Sefolosha', 'Paul Millsap', 'Al Horford',
+  'Rajon Rondo', 'Kendrick Perkins', 'Glen Davis', 'Nate Robinson', 'Eddie House',
+  'Avery Bradley', 'Jared Sullinger', 'Brandon Bass', 'Courtney Lee', 'Jason Terry',
+  'Terry Rozier', 'Marcus Smart', 'Jaylen Brown', 'Jayson Tatum', 'Kyrie Irving',
+  'Baron Davis', 'Monta Ellis', 'Stephen Jackson', 'Al Harrington', 'Corey Maggette',
+  
+  // 2000s Era Stars
+  'Tracy McGrady', 'Vince Carter', 'Allen Iverson', 'Yao Ming', 'Dirk Nowitzki',
+  'Steve Nash', 'Amar\'e Stoudemire', 'Manu Ginobili', 'Tony Parker', 'Chauncey Billups',
+  'Ben Wallace', 'Rasheed Wallace', 'Jermaine O\'Neal', 'Pau Gasol', 'Marc Gasol',
+  'Chris Bosh', 'Carmelo Anthony', 'Dwight Howard', 'Deron Williams', 'Chris Paul',
+  'Derrick Rose', 'Kevin Love', 'Russell Westbrook', 'James Harden', 'Blake Griffin',
+  'Rajon Rondo', 'Kendrick Perkins', 'Glen Davis', 'Nate Robinson', 'Eddie House',
+  'Ray Allen', 'Paul Pierce', 'Kevin Garnett', 'Rajon Rondo', 'Kendrick Perkins',
+  'Gilbert Arenas', 'Antawn Jamison', 'Caron Butler', 'Brendan Haywood', 'DeShawn Stevenson',
+  'Antawn Jamison', 'Caron Butler', 'Brendan Haywood', 'DeShawn Stevenson', 'Gilbert Arenas',
+  
+  // 1990s Era Stars
+  'Anfernee Hardaway', 'Grant Hill', 'Alonzo Mourning', 'Dikembe Mutombo', 'Reggie Miller',
+  'Mitch Richmond', 'Chris Mullin', 'Tim Hardaway', 'Kevin Johnson', 'Mark Price',
+  'Terrell Brandon', 'Bobby Phills', 'Muggsy Bogues', 'Dell Curry', 'Larry Johnson',
+  'Alonzo Mourning', 'Kendall Gill', 'Derrick Coleman', 'Kenny Anderson', 'Chris Morris',
+  'Rik Smits', 'Dale Davis', 'Antonio Davis', 'Mark Jackson', 'Jalen Rose',
+  'Reggie Miller', 'Rik Smits', 'Dale Davis', 'Antonio Davis', 'Mark Jackson',
+  
+  // 1980s Era Stars
+  'Isiah Thomas', 'Joe Dumars', 'James Worthy', 'Byron Scott', 'Michael Cooper',
+  'Kurt Rambis', 'Robert Parish', 'Kevin McHale', 'Dennis Johnson', 'Danny Ainge',
+  'Cedric Maxwell', 'Larry Nance', 'Brad Daugherty', 'Mark Price', 'Ron Harper',
+  'Dominique Wilkins', 'Spud Webb', 'Doc Rivers', 'Tree Rollins', 'Moses Malone',
+  'Julius Erving', 'Maurice Cheeks', 'Bobby Jones', 'Andrew Toney', 'Maurice Cheeks',
+  'Bobby Jones', 'Andrew Toney', 'Maurice Cheeks', 'Bobby Jones', 'Andrew Toney',
+  
+  // 1970s Era Stars
+  'John Havlicek', 'Dave Cowens', 'Jo Jo White', 'Paul Silas', 'Don Nelson',
+  'Tom Heinsohn', 'Sam Jones', 'K.C. Jones', 'Bob Cousy', 'Bill Sharman',
+  'Frank Ramsey', 'Jim Loscutoff', 'Satch Sanders', 'Ed Macauley', 'Bob Pettit',
+  'Cliff Hagan', 'Slater Martin', 'Vern Mikkelsen', 'Jim Pollard', 'George Yardley',
+  'Neil Johnston', 'Paul Arizin', 'Tom Gola', 'Dolph Schayes', 'Bob Pettit',
+  
+  // 1960s Era Stars
+  'Willis Reed', 'Walt Frazier', 'Dave DeBusschere', 'Bill Bradley', 'Earl Monroe',
+  'Wes Unseld', 'Elvin Hayes', 'Gus Johnson', 'Jack Marin', 'Phil Chenier',
+  'Dave Bing', 'Bob Lanier', 'Dave DeBusschere', 'Bill Bradley', 'Earl Monroe',
+  'Wes Unseld', 'Elvin Hayes', 'Gus Johnson', 'Jack Marin', 'Phil Chenier',
+  'Dave Bing', 'Bob Lanier', 'Dave DeBusschere', 'Bill Bradley', 'Earl Monroe',
+  
+  // 1950s Era Stars
+  'George Mikan', 'Ed Macauley', 'Bob Pettit', 'Cliff Hagan', 'Slater Martin',
+  'Vern Mikkelsen', 'Jim Pollard', 'George Yardley', 'Neil Johnston', 'Paul Arizin',
+  'Tom Gola', 'Dolph Schayes', 'Bob Pettit', 'Cliff Hagan', 'Slater Martin',
+  'Vern Mikkelsen', 'Jim Pollard', 'George Yardley', 'Neil Johnston', 'Paul Arizin',
+  'Tom Gola', 'Dolph Schayes', 'Bob Pettit', 'Cliff Hagan', 'Slater Martin',
+  
+  // International Players
+  'Dirk Nowitzki', 'Pau Gasol', 'Marc Gasol', 'Manu Ginobili', 'Tony Parker',
+  'Yao Ming', 'Hakeem Olajuwon', 'Dikembe Mutombo', 'Steve Nash', 'Andrew Bogut',
+  'Patty Mills', 'Joe Ingles', 'Matthew Dellavedova', 'Aron Baynes', 'Dante Exum',
+  'Ben Simmons', 'Kyrie Irving', 'Andrew Wiggins', 'Jamal Murray', 'Shai Gilgeous-Alexander',
+  'RJ Barrett', 'Luka Dončić', 'Goran Dragić', 'Bojan Bogdanović', 'Nikola Vučević',
+  'Nikola Jokić', 'Giannis Antetokounmpo', 'Kostas Antetokounmpo', 'Thanasis Antetokounmpo',
+  'Domantas Sabonis', 'Jonas Valančiūnas', 'Kristaps Porziņģis', 'Rudy Gobert',
+  'Evan Fournier', 'Nicolas Batum', 'Boris Diaw', 'Rudy Fernández', 'Juancho Hernangómez',
+  'Willy Hernangómez', 'Sergio Rodríguez', 'Ricky Rubio', 'Marc Gasol', 'Pau Gasol',
+  
+  // WNBA Stars
+  'Diana Taurasi', 'Sue Bird', 'Candace Parker', 'Maya Moore', 'Breanna Stewart',
+  'A\'ja Wilson', 'Sabrina Ionescu', 'Kelsey Plum', 'Jackie Young', 'Chelsea Gray',
+  'Alyssa Thomas', 'Courtney Williams', 'Rhyne Howard', 'Aliyah Boston', 'Haley Jones',
+  'Caitlin Clark', 'Angel Reese', 'Kamilla Cardoso', 'Cameron Brink', 'Rickea Jackson',
+  'Jacy Sheldon', 'Dyaisha Fair', 'Maddy Siegrist', 'Aliyah Boston', 'Haley Jones',
+  
+  // Other
   'Other'
 ]
 
@@ -67,13 +160,20 @@ export default function RegisterPage() {
     setSubmitStatus('idle')
     
     try {
+      // Add timeout to prevent hanging
+      const controller = new AbortController()
+      const timeoutId = setTimeout(() => controller.abort(), 30000) // 30 second timeout
+      
       const response = await fetch('/api/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
+        signal: controller.signal
       })
+      
+      clearTimeout(timeoutId)
       
       const data = await response.json()
       
@@ -106,9 +206,18 @@ export default function RegisterPage() {
           setErrors({ general: data.error || 'Registration failed. Please try again.' })
         }
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Registration error:', error)
       setSubmitStatus('error')
+      
+      // Handle specific error types
+      if (error.name === 'AbortError') {
+        setErrors({ general: 'Registration timed out. Please try again.' })
+      } else if (error.message?.includes('timeout')) {
+        setErrors({ general: 'Registration timed out. Please try again.' })
+      } else {
+        setErrors({ general: 'Something went wrong. Please try again.' })
+      }
     } finally {
       setIsSubmitting(false)
     }
