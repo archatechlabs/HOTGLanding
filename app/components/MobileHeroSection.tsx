@@ -11,7 +11,7 @@ function StaticCounter({ target }: { target: number }) {
 
 export default function MobileHeroSection() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-dark-bg">
       {/* Hero Background Image */}
       <div className="absolute inset-0">
         <Image

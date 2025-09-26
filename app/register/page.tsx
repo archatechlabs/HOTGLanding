@@ -162,7 +162,7 @@ export default function RegisterPage() {
     try {
       // Add timeout to prevent hanging
       const controller = new AbortController()
-      const timeoutId = setTimeout(() => controller.abort(), 30000) // 30 second timeout
+      const timeoutId = setTimeout(() => controller.abort(), 60000) // 60 second timeout
       
       const response = await fetch('/api/register', {
         method: 'POST',
@@ -202,6 +202,8 @@ export default function RegisterPage() {
         // Handle specific error cases
         if (response.status === 409) {
           setErrors({ general: 'This email is already registered. Please try signing in instead.' })
+        } else if (data.error?.includes('email-already-in-use')) {
+          setErrors({ general: 'This email is already registered. Please try signing in instead.' })
         } else {
           setErrors({ general: data.error || 'Registration failed. Please try again.' })
         }
@@ -212,9 +214,11 @@ export default function RegisterPage() {
       
       // Handle specific error types
       if (error.name === 'AbortError') {
-        setErrors({ general: 'Registration timed out. Please try again.' })
+        setErrors({ general: 'Registration timed out. The server is taking too long to respond. Please try again.' })
       } else if (error.message?.includes('timeout')) {
         setErrors({ general: 'Registration timed out. Please try again.' })
+      } else if (error.message?.includes('Failed to fetch')) {
+        setErrors({ general: 'Network error. Please check your connection and try again.' })
       } else {
         setErrors({ general: 'Something went wrong. Please try again.' })
       }

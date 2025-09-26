@@ -107,6 +107,15 @@ export async function POST(request: NextRequest) {
         message: result.message,
         email: body.email
       })
+      
+      // Handle specific error cases with appropriate status codes
+      if (result.error === 'Email already registered') {
+        return NextResponse.json(
+          { error: result.message || 'Email already registered' },
+          { status: 409 }
+        )
+      }
+      
       return NextResponse.json(
         { error: result.error || 'Registration failed' },
         { status: 400 }

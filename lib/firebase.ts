@@ -1,7 +1,6 @@
 import { initializeApp, getApps } from 'firebase/app'
 import { getAuth } from 'firebase/auth'
 import { getFirestore } from 'firebase/firestore'
-import { getAnalytics, isSupported } from 'firebase/analytics'
 
 const firebaseConfig = {
   apiKey: "AIzaSyAhMoOPSsp9Ixf90UJUvVBZEoiCaswe434",
@@ -21,8 +20,5 @@ export const auth = getAuth(app)
 
 // Initialize Cloud Firestore and get a reference to the service
 export const db = getFirestore(app)
-
-// Initialize Firebase Analytics (only in browser environment)
-export const analytics = typeof window !== 'undefined' ? getAnalytics(app) : null
 
 export default app
