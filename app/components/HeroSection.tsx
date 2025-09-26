@@ -168,7 +168,7 @@ export default function HeroSection() {
             />
           </div>
           
-          <p className="text-xl md:text-2xl text-gray-800 mb-8 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl md:text-2xl text-white mb-8 max-w-3xl mx-auto leading-relaxed">
             Step into the future of basketball storytelling. Experience legendary moments, 
             iconic players, and historic games through immersive Web3 technology.
           </p>

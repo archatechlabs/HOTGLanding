@@ -84,7 +84,7 @@ export default function MobileHeroSection() {
           </motion.div>
           
           <motion.p 
-            className="text-lg text-gray-800 mb-8 max-w-3xl mx-auto leading-relaxed"
+            className="text-lg text-white mb-8 max-w-3xl mx-auto leading-relaxed"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ 
