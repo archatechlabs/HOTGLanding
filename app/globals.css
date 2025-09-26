@@ -86,29 +86,22 @@ body {
   animation: gradientShift 15s ease infinite;
 }
 
-/* Mobile-safe animations */
+/* Mobile-safe animations - Testing with animations enabled */
 @media (max-width: 767px) {
   .animated-bg {
     animation-duration: 30s; /* Slower on mobile */
   }
   
-  /* Disable heavy animations on mobile */
-  * {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+  /* Reduce backdrop blur on mobile for performance */
+  .glass {
+    backdrop-filter: blur(5px);
   }
   
-  /* Keep only essential animations */
+  /* Keep mobile animations smooth but not too heavy */
   .mobile-fade-in,
   .mobile-scale-in,
   .mobile-counter {
     animation-duration: 0.8s !important;
-  }
-  
-  /* Reduce backdrop blur on mobile for performance */
-  .glass {
-    backdrop-filter: blur(5px);
   }
 }
 

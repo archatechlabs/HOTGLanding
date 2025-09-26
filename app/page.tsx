@@ -75,18 +75,32 @@ export default function Home() {
     )
   }
 
-  // Mobile version - stable, no logo animation
+  // Mobile version - with intro animation for testing
   if (isMobile) {
     return (
       <ErrorBoundary>
-        <main className="min-h-screen">
+        <AnimatePresence>
+          {showLogo && (
+            <LogoAnimation 
+              key="logo-animation-mobile"
+              onComplete={handleLogoComplete} 
+            />
+          )}
+        </AnimatePresence>
+        
+        <motion.main 
+          className="min-h-screen"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
           <MobileHeroSection />
           <StaticMuseumShowcase />
           <Web3Features />
           <IRLEvents />
           <CallToAction />
           <Footer />
-        </main>
+        </motion.main>
       </ErrorBoundary>
     )
   }
