@@ -37,8 +37,11 @@ export default function LogoAnimation({ onComplete }: LogoAnimationProps) {
     <motion.div
       className="fixed inset-0 z-50 flex items-center justify-center bg-dark-bg"
       initial={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.5, ease: "easeInOut" }}
+      exit={{ opacity: 0, scale: 1.1 }}
+      transition={{ 
+        duration: 0.8, 
+        ease: [0.25, 0.46, 0.45, 0.94]
+      }}
     >
       {/* Simple Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-dark-bg via-gray-900 to-dark-bg" />
@@ -52,9 +55,14 @@ export default function LogoAnimation({ onComplete }: LogoAnimationProps) {
           opacity: 1,
           y: [0, -10, 0]
         }}
+        exit={{ 
+          scale: 0.8, 
+          opacity: 0,
+          y: -20
+        }}
         transition={{
-          scale: { duration: 0.8, ease: "easeOut" },
-          opacity: { duration: 0.8, ease: "easeOut" },
+          scale: { duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] },
+          opacity: { duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] },
           y: { 
             duration: 2, 
             repeat: Infinity, 

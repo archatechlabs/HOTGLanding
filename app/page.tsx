@@ -75,64 +75,71 @@ export default function Home() {
     )
   }
 
-  // Mobile version - with intro animation for testing
+  // Mobile version - with proper logo sequence
   if (isMobile) {
     return (
       <ErrorBoundary>
-        <AnimatePresence>
-          {showLogo && (
+        <AnimatePresence mode="wait">
+          {showLogo ? (
             <LogoAnimation 
               key="logo-animation-mobile"
               onComplete={handleLogoComplete} 
             />
+          ) : (
+            <motion.main 
+              key="main-content-mobile"
+              className="min-h-screen"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ 
+                duration: 1.0, 
+                ease: [0.25, 0.46, 0.45, 0.94]
+              }}
+            >
+              <MobileHeroSection />
+              <StaticMuseumShowcase />
+              <Web3Features />
+              <IRLEvents />
+              <CallToAction />
+              <Footer />
+            </motion.main>
           )}
         </AnimatePresence>
-        
-        <motion.main 
-          className="min-h-screen"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ 
-            duration: 1.2, 
-            ease: [0.25, 0.46, 0.45, 0.94]
-          }}
-        >
-          <MobileHeroSection />
-          <StaticMuseumShowcase />
-          <Web3Features />
-          <IRLEvents />
-          <CallToAction />
-          <Footer />
-        </motion.main>
       </ErrorBoundary>
     )
   }
 
-  // Desktop version with animations
+  // Desktop version with proper logo sequence
   return (
     <ErrorBoundary>
-      <AnimatePresence>
-        {showLogo && (
+      <AnimatePresence mode="wait">
+        {showLogo ? (
           <LogoAnimation 
             key="logo-animation"
             onComplete={handleLogoComplete} 
           />
+        ) : (
+          <motion.main 
+            key="main-content"
+            className="min-h-screen"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ 
+              duration: 1.0, 
+              ease: [0.25, 0.46, 0.45, 0.94]
+            }}
+          >
+            <HeroSection />
+            <MuseumShowcase />
+            <Web3Features />
+            <IRLEvents />
+            <CallToAction />
+            <Footer />
+          </motion.main>
         )}
       </AnimatePresence>
-      
-      <motion.main 
-        className="min-h-screen"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-      >
-        <HeroSection />
-        <MuseumShowcase />
-        <Web3Features />
-        <IRLEvents />
-        <CallToAction />
-        <Footer />
-      </motion.main>
     </ErrorBoundary>
   )
 }
