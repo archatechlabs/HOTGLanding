@@ -61,8 +61,15 @@ export default function Home() {
 
   const handleLogoComplete = () => {
     console.log('🎬 Logo animation completed, transitioning to main content')
+    console.log('🎬 Current showLogo state:', showLogo)
     setShowLogo(false)
+    console.log('🎬 Set showLogo to false')
   }
+
+  // Track showLogo state changes
+  useEffect(() => {
+    console.log('🔄 showLogo state changed to:', showLogo)
+  }, [showLogo])
 
   // Show loading state during hydration
   if (!isClient) {
@@ -78,6 +85,7 @@ export default function Home() {
 
   // Mobile version - with proper logo sequence
   if (isMobile) {
+    console.log('📱 Mobile version rendering, showLogo:', showLogo)
     return (
       <ErrorBoundary>
         <AnimatePresence mode="wait">
@@ -112,6 +120,7 @@ export default function Home() {
   }
 
   // Desktop version with proper logo sequence
+  console.log('🖥️ Desktop version rendering, showLogo:', showLogo)
   return (
     <ErrorBoundary>
       <AnimatePresence mode="wait">
