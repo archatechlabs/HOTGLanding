@@ -48,18 +48,19 @@ export default function Home() {
     }
   }, [])
 
-  // Auto-hide logo animation after 3 seconds (only on desktop)
+  // Auto-hide logo animation after 3 seconds (fallback for both mobile and desktop)
   useEffect(() => {
-    if (!isClient || isMobile) return
+    if (!isClient) return
     
     const timer = setTimeout(() => {
       setShowLogo(false)
     }, 3000)
 
     return () => clearTimeout(timer)
-  }, [isClient, isMobile])
+  }, [isClient])
 
   const handleLogoComplete = () => {
+    console.log('🎬 Logo animation completed, transitioning to main content')
     setShowLogo(false)
   }
 

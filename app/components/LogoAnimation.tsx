@@ -26,7 +26,10 @@ export default function LogoAnimation({ onComplete }: LogoAnimationProps) {
   useEffect(() => {
     // Shorter duration on mobile to prevent crashes
     const duration = isMobile ? 2000 : 4000
+    console.log(`🎬 Logo animation starting, duration: ${duration}ms, mobile: ${isMobile}`)
+    
     const timer = setTimeout(() => {
+      console.log('🎬 Logo animation timer completed, calling onComplete')
       onComplete?.()
     }, duration)
 
