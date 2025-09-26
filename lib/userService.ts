@@ -284,7 +284,7 @@ export async function checkEmailExists(email: string) {
     const q = query(usersRef, where('email', '==', email.toLowerCase()))
     const firestorePromise = getDocs(q)
     
-    const snapshot = await Promise.race([firestorePromise, firestoreTimeout])
+    const snapshot = await Promise.race([firestorePromise, firestoreTimeout]) as any
     const exists = !snapshot.empty
     console.log('📧 Email exists check result:', exists)
     return exists
