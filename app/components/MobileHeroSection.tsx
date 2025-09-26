@@ -43,13 +43,21 @@ export default function MobileHeroSection() {
           className="mb-8"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          transition={{ 
+            duration: 1.2, 
+            delay: 0.3,
+            ease: [0.25, 0.46, 0.45, 0.94] // Custom easing for smoothness
+          }}
         >
           <motion.div 
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-neon-blue/30 mb-6"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
+            transition={{ 
+              duration: 0.8, 
+              delay: 0.5,
+              ease: [0.25, 0.46, 0.45, 0.94]
+            }}
           >
             <Star className="text-neon-blue" size={16} />
             <span className="text-sm font-medium text-neon-blue">Web3 Basketball Museum</span>
@@ -59,7 +67,11 @@ export default function MobileHeroSection() {
             className="mb-6"
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
+            transition={{ 
+              duration: 1.0, 
+              delay: 0.7,
+              ease: [0.25, 0.46, 0.45, 0.94]
+            }}
           >
             <Image
               src="/logos/HOTG_Logo_transparent.png"
@@ -75,7 +87,11 @@ export default function MobileHeroSection() {
             className="text-lg text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
+            transition={{ 
+              duration: 1.0, 
+              delay: 0.9,
+              ease: [0.25, 0.46, 0.45, 0.94]
+            }}
           >
             Step into the future of basketball storytelling. Experience legendary moments, 
             iconic players, and historic games through immersive Web3 technology.
@@ -87,13 +103,23 @@ export default function MobileHeroSection() {
           className="flex flex-col sm:flex-row justify-center items-center gap-4 mb-16"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.0 }}
+          transition={{ 
+            duration: 1.2, 
+            delay: 1.1,
+            ease: [0.25, 0.46, 0.45, 0.94]
+          }}
         >
           <Link href="/register">
             <motion.button 
               className="group flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-neon-blue to-neon-purple rounded-full font-semibold text-lg text-white hover:opacity-90 transition-opacity"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={{ 
+                scale: 1.05,
+                transition: { duration: 0.2, ease: "easeOut" }
+              }}
+              whileTap={{ 
+                scale: 0.95,
+                transition: { duration: 0.1, ease: "easeOut" }
+              }}
             >
               Start Your Journey
               <ArrowRight className="group-hover:translate-x-1 transition-transform" size={20} />
@@ -102,8 +128,14 @@ export default function MobileHeroSection() {
           
           <motion.button 
             className="group flex items-center gap-2 px-8 py-4 glass rounded-full font-semibold text-lg text-white hover:bg-white/20 transition-all"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            whileHover={{ 
+              scale: 1.05,
+              transition: { duration: 0.2, ease: "easeOut" }
+            }}
+            whileTap={{ 
+              scale: 0.95,
+              transition: { duration: 0.1, ease: "easeOut" }
+            }}
           >
             <Play className="group-hover:scale-110 transition-transform" size={20} />
             Watch Trailer
@@ -115,7 +147,11 @@ export default function MobileHeroSection() {
           className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.2 }}
+          transition={{ 
+            duration: 1.2, 
+            delay: 1.3,
+            ease: [0.25, 0.46, 0.45, 0.94]
+          }}
         >
           {[
             { number: 5000, label: "Legendary Players", suffix: "+" },
@@ -127,7 +163,11 @@ export default function MobileHeroSection() {
               className="text-center"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 1.4 + (index * 0.2) }}
+              transition={{ 
+                duration: 0.8, 
+                delay: 1.5 + (index * 0.3),
+                ease: [0.25, 0.46, 0.45, 0.94]
+              }}
             >
               <div className="text-4xl md:text-5xl font-orbitron font-bold gradient-text mb-2">
                 {typeof stat.number === 'number' ? (
