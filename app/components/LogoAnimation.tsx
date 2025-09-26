@@ -33,7 +33,10 @@ export default function LogoAnimation({ onComplete }: LogoAnimationProps) {
       onComplete?.()
     }, duration)
 
-    return () => clearTimeout(timer)
+    return () => {
+      console.log('🎬 Logo animation cleanup')
+      clearTimeout(timer)
+    }
   }, [onComplete, isMobile])
 
   return (

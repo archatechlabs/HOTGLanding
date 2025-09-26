@@ -17,6 +17,7 @@ export default function Home() {
   const [showLogo, setShowLogo] = useState(true)
   const [isMobile, setIsMobile] = useState(false)
   const [isClient, setIsClient] = useState(false)
+  const [logoAnimationStarted, setLogoAnimationStarted] = useState(false)
 
   useEffect(() => {
     // Set client-side flag
@@ -63,6 +64,7 @@ export default function Home() {
     console.log('🎬 Logo animation completed, transitioning to main content')
     console.log('🎬 Current showLogo state:', showLogo)
     setShowLogo(false)
+    setLogoAnimationStarted(false)
     console.log('🎬 Set showLogo to false')
   }
 
@@ -88,33 +90,30 @@ export default function Home() {
     console.log('📱 Mobile version rendering, showLogo:', showLogo)
     return (
       <ErrorBoundary>
-        <AnimatePresence mode="wait">
-          {showLogo ? (
-            <LogoAnimation 
-              key="logo-animation-mobile"
-              onComplete={handleLogoComplete} 
-            />
-          ) : (
-            <motion.main 
-              key="main-content-mobile"
-              className="min-h-screen"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ 
-                duration: 1.0, 
-                ease: [0.25, 0.46, 0.45, 0.94]
-              }}
-            >
-              <MobileHeroSection />
-              <StaticMuseumShowcase />
-              <Web3Features />
-              <IRLEvents />
-              <CallToAction />
-              <Footer />
-            </motion.main>
-          )}
-        </AnimatePresence>
+        {showLogo ? (
+          <LogoAnimation 
+            key="logo-animation-mobile"
+            onComplete={handleLogoComplete} 
+          />
+        ) : (
+          <motion.main 
+            key="main-content-mobile"
+            className="min-h-screen"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ 
+              duration: 1.0, 
+              ease: [0.25, 0.46, 0.45, 0.94]
+            }}
+          >
+            <MobileHeroSection />
+            <StaticMuseumShowcase />
+            <Web3Features />
+            <IRLEvents />
+            <CallToAction />
+            <Footer />
+          </motion.main>
+        )}
       </ErrorBoundary>
     )
   }
@@ -123,33 +122,30 @@ export default function Home() {
   console.log('🖥️ Desktop version rendering, showLogo:', showLogo)
   return (
     <ErrorBoundary>
-      <AnimatePresence mode="wait">
-        {showLogo ? (
-          <LogoAnimation 
-            key="logo-animation"
-            onComplete={handleLogoComplete} 
-          />
-        ) : (
-          <motion.main 
-            key="main-content"
-            className="min-h-screen"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ 
-              duration: 1.0, 
-              ease: [0.25, 0.46, 0.45, 0.94]
-            }}
-          >
-            <HeroSection />
-            <MuseumShowcase />
-            <Web3Features />
-            <IRLEvents />
-            <CallToAction />
-            <Footer />
-          </motion.main>
-        )}
-      </AnimatePresence>
+      {showLogo ? (
+        <LogoAnimation 
+          key="logo-animation"
+          onComplete={handleLogoComplete} 
+        />
+      ) : (
+        <motion.main 
+          key="main-content"
+          className="min-h-screen"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ 
+            duration: 1.0, 
+            ease: [0.25, 0.46, 0.45, 0.94]
+          }}
+        >
+          <HeroSection />
+          <MuseumShowcase />
+          <Web3Features />
+          <IRLEvents />
+          <CallToAction />
+          <Footer />
+        </motion.main>
+      )}
     </ErrorBoundary>
   )
 }
