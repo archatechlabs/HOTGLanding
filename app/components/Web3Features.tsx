@@ -72,7 +72,7 @@ export default function Web3Features() {
           <h2 className="text-5xl md:text-6xl font-orbitron font-bold mb-6">
             Powered by <span className="gradient-text">Solana</span>
           </h2>
-          <p className="text-xl text-gray-800 max-w-3xl mx-auto">
+          <p className="text-xl text-white max-w-3xl mx-auto">
             Experience lightning-fast transactions and low-cost digital collectibles 
             on the world's fastest blockchain network.
           </p>
@@ -103,10 +103,10 @@ export default function Web3Features() {
 
                 {/* Content */}
                 <div className="relative z-10">
-                  <h3 className="text-2xl font-orbitron font-bold mb-3 text-gray-900">
+                  <h3 className="text-2xl font-orbitron font-bold mb-3 text-white">
                     {feature.title}
                   </h3>
-                  <p className="text-gray-700 leading-relaxed">
+                  <p className="text-white leading-relaxed">
                     {feature.description}
                   </p>
                 </div>

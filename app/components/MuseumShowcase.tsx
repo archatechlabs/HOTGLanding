@@ -119,7 +119,7 @@ export default function MuseumShowcase() {
               <h3 className="text-3xl font-orbitron font-bold mb-4 gradient-text">
                 Experience the Future
               </h3>
-              <p className="text-lg text-gray-800 mb-6">
+              <p className="text-lg text-white mb-6">
                 Our Web3 technology brings basketball history to life like never before. 
                 Each exhibit is an interactive journey through time.
               </p>

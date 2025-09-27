@@ -38,10 +38,10 @@ export default function Footer() {
                 <h3 className="text-2xl font-orbitron font-bold gradient-text">
                   History of the Game
                 </h3>
-                <p className="text-sm text-gray-600">Web3 Basketball Museum</p>
+                <p className="text-sm text-white">Web3 Basketball Museum</p>
               </div>
             </div>
-            <p className="text-gray-800 mb-6 max-w-md leading-relaxed">
+            <p className="text-white mb-6 max-w-md leading-relaxed">
               Experience basketball history like never before through immersive Web3 technology. 
               Discover legendary moments, players, and stories in our digital museum.
             </p>

@@ -42,7 +42,7 @@ export default function StaticMuseumShowcase() {
           <h2 className="text-5xl md:text-6xl font-orbitron font-bold mb-6">
             <span className="gradient-text">Museum</span> Exhibits
           </h2>
-          <p className="text-xl text-gray-800 max-w-3xl mx-auto">
+          <p className="text-xl text-white max-w-3xl mx-auto">
             Immerse yourself in basketball's rich history through cutting-edge Web3 technology 
             and interactive storytelling experiences.
           </p>
@@ -63,14 +63,14 @@ export default function StaticMuseumShowcase() {
 
                 {/* Content */}
                 <div className="relative z-10">
-                  <h3 className="text-2xl font-orbitron font-bold mb-3 text-gray-900">
+                  <h3 className="text-2xl font-orbitron font-bold mb-3 text-white">
                     {exhibit.title}
                   </h3>
-                  <p className="text-gray-700 mb-4 leading-relaxed">
+                  <p className="text-white mb-4 leading-relaxed">
                     {exhibit.description}
                   </p>
                   <div className="flex items-center justify-between">
-                    <span className="text-sm font-semibold text-gray-600">
+                    <span className="text-sm font-semibold text-white">
                       {exhibit.stats}
                     </span>
                   </div>
@@ -90,7 +90,7 @@ export default function StaticMuseumShowcase() {
               <h3 className="text-4xl font-orbitron font-bold mb-6 gradient-text">
                 Experience the Future
               </h3>
-              <p className="text-lg text-gray-800 mb-8 leading-relaxed">
+              <p className="text-lg text-white mb-8 leading-relaxed">
                 Our Web3 technology brings basketball history to life like never before. 
                 Each exhibit is an interactive journey through time.
               </p>
